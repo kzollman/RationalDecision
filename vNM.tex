@@ -1,0 +1,392 @@
+\chapter[von Neumann\breakslash Morgenstern]{von~Neumann and Morgenstern Decision Theory}
+\label{c:vnm}
+
+
+%I think it would be good to add one "counterexample" example.  Like lexicography, minimax or something like that.  This will help to illustrate how one thinks about counterexamples.
+
+
+So far, we've developed the theory of decisions under certainty in chapter~\ref{c:certainty}.  There we discussed how an agent might make choices when faced with outcomes where they know what will occur.  In chapter~\ref{c:probability}, we discussed how an agent should think about uncertainty.  We illustrated several popular arguments for why agents should think about uncertainty by assigning subjective probability judgments to those things about which they are uncertain.  We have just one piece of the puzzle left: how should agents make decisions when they are uncertain?
+
+Take the example of dice.  Suppose Mandy is offered a very simple gamble, one that will pay \$10 if the dice lands \dice{1}, and \$0 if it lands any other number. Mandy is given the choice: she can take this gamble or she can have \$1 for sure.  Suppose that she chooses \$1 for sure.  Was that rational for her? Suppose that she later confronts a similar gamble that pays \$9 if the dice lands \dice{2} or \$1 for sure, and now she chooses the dice roll. Are both those decisions rational?  Or are they inconsistent with one another?
+
+A natural way to think about this problem is to calculate the {\it expected monetary return}, that is to ask how much money Mandy would win on average if she took the gamble many times.  In that case, she should accept both gambles.  The first will pay on average \$10/6 (assuming we think this is a fair dice) and the second will pay \$9/6.  Both of these are larger than \$1.  
+
+However, some agents may not value money in that way.  If Mandy has already promised to give that dollar to a friend who needs it to buy lunch, she might opt to refuse both gambles.  We want theory that allows Mandy to care about money in different ways, otherwise the theory will be far too restrictive.  If you are like me, however, you probably still think Mandy refusing the first gamble but accepting the second seems\dots well\dots strange.
+
+Not only do we want to be a little more lax in our judgments about how money is valued, we also want a theory that can handle more than just money.  If Mandy is deciding whether or not to take an umbrella with her on her walk to work, she is still gambling but not with money.  Her gamble now involves outcomes like, ``get wet on the walk'' and ``needlessly take an umbrella'' and the like.  It's not at all clear how one might calculate an average of objects like this.
+
+We need to develop some set of constraints for how Mandy makes decisions in the context of risk that isn't too constraining, but also does just say ``anything goes.''  This is what we will do in the next section.
+
+\section{An outline of the strategy}
+\label{s:vnm-strategy}
+
+This book is not a novel, so I will give away the ending.  What we are ultimately trying to do is something like the strategy of {\it expected monetary return}, except with utility rather than money. The problem that we confronted in chapter~\ref{c:certainty} was that ordinal utility can't use averages.  We need a richer notion of utility which will allow averages. Then we can articulate a constraint on rational behavior: a rational agent must choose the gamble that maximizes expected utility.
+
+This is a somewhat complicated process.  Let me give you a simple example first, then we will show how this simple example can be expanded. 
+
+Let's start with a very simple case of decision under certainty. Suppose that Mandy is confronted with three beverage options for her regular afternoon drink with a colleague.  Mandy can order from among this set $X = \{$tea, coffee, soda$\}$.  Suppose that Mandy obeys all the relevant axioms we discussed in chapter~\ref{c:certainty}, so we can represent her as having a preference relation which is complete and transitive over the set.  Suppose her preferences look like this: tea $\succ$ soda $\succ$ coffee.  So we know that if tea is available, Mandy will order that.  If it's not she'll order soda. And if neither of those are possible, she'll make due with coffee.
+
+As we mentioned in chapter~\ref{c:certainty}, the definition of $\succsim$ allow us to assign numbers to each outcome that represent Mandy's preferences.  Recall definition~\ref{d:util-representation}, which defines what we mean by ``represents'' in this context. 
+
+Now suppose that Mandy's colleague Teddy loves to make bets, and loves to offer his colleagues like Mandy strange decisions.  Teddy offers to go buy Mandy a drink.  But, he only gives her two options.  Either ($A$) he will buy her a soda or ($B$) he will flip a (fair) coin and if it comes up heads buy her a tea and buy her a coffee if it comes up tails.  
+Intuitively what do we think Mandy will do?  It seems like there isn't yet a clear answer to this question, since we don't really know anything about the {\it strength} of her preference.  How much more does she like tea than soda?  How much does she dislike coffee?  
+
+If Mandy really (really) liked tea and regarded soda and coffee as nearly equivalent, it seems natural that Mandy might take the bet.  If she loses, she doesn't lose that much and if she wins, then she wins big.  But, if her preferences are different and she thinks that tea and soda a nearly the same, with coffee as a distant third, then she might opt for the sure thing of soda.
+
+One way to measure this strength is for Teddy to experiment with different coins.  Suppose, instead of a fair coin, Teddy brings his collection of biased coins each day.  And each day he tries out a new one to see what Mandy prefers.  For some coins she chooses the uncertain gamble, other times she opts for a soda.  Eventually after experimenting for a while, Teddy finds a magic probability $\hat{p}$.  If Teddy offers her a gamble that gives her a tea with probability $\hat{p}$ and a coffee with probability $(1-\hat{p})$, then Mandy is indifferent between that gamble and getting a soda for sure.
+
+Let's suppose, for a moment, that after extensive investigation, Teddy comes to be confident that Mandy has the following choice procedure.  If Teddy offers her a gamble that gives her tea with probability $p$ and coffee with probability $(1-p)$, she will...
+\begin{enumerate}
+\item ... strictly prefer the gamble to getting a soda for sure when $p > \hat{p}$
+\item ... strictly prefer getting a soda for sure to the gamble when $\hat{p} > p$
+\item ... be indifferent between the gamble and a soda for sure when $p = \hat{p}$
+\end{enumerate}
+Given that Mandy follows this procedure, it seems somewhat reasonable to think that $\hat{p}$ can help us to figure out Mandy's strength of preference between tea, soda, and coffee.  
+
+We will construct a utility function  $u: X \to \mathbb{R}$. We will start by assigning numbers to the two extreme outcomes, her favorite (tea) and her least favorite (coffee).    For our own convenience we will start by assigning $u($tea$) = 1$ and $u($coffee$) = 0$. (Why is it okay for use to do this arbitrarily?  We will come back to that later.)  Once we do that, we can now assign $u($soda$) = \hat{p}$. 
+
+If we use this particular $u(\cdot)$, then we can say that Mandy behaves {\it as if} she is maximized the expected utility, where $u(\cdot)$ represents her utility.  To see why, let's go through each example above.
+\begin{enumerate}
+\item Suppose that $p > \hat{p}$.  The expected value of the gamble is given by $p u($tea$) + (1-p) u($coffee$)$.  Since $u($tea$)=1$ and $u($coffee$)=0$, this simplifies to $p$.  Since $p > \hat{p}$, and since $u($soda$)=\hat{p}$, Mandy's expected utility is higher with the gamble than with a soda for sure.
+\item Suppose that $\hat{p} > p$.  The expected value of the gamble is still given by $p u($tea$) + (1-p) u($coffee$) = p$. Since $\hat{p} > p$, and since $u($soda$)=\hat{p}$, Mandy's expected utility is higher with soda for sure than with the gamble.
+\item Finally when $\hat{p} = p$, the two have the same expected utility.  Therefore Mandy is indifferent.
+\end{enumerate}
+
+How might this strategy go wrong?  Let me count the ways.  First, Mandy might not ever be indifferent.  Suppose that Mandy decided that if the probability of tea was greater than or equal to 1/2, then she would prefer the gamble.  If it was less than 1/2, she would prefer the soda.  There would be no point where Mandy was indifferent, and this strategy wouldn't work. 
+
+Or maybe Mandy declares ``I don't gamble.  I will always prefer the soda unless $p=1$.''  In that case, the gambling strategy would say that $u($tea$) = u($soda$) = 1$, which violates our assumption that Mandy strictly prefers tea to soda.
+
+At the other extreme, Mandy might have more than one point where she was indifferent.  Suppose Mandy said, ``if $p > 3/4$ I will prefer the gamble.  If $p < 1/4$ I will prefer the soda.  And if $3/4 \geq p \geq 1/4$ I will be indifferent.'' Now there is no longer a unique value that we can assign to $u($soda$)$ (although we might be able to assign a range to it).  Even more radically Mandy might divide up the interval in many different strange ways that would make this strategy impossible.
+
+So far we've imagined problems that might arise for just this simple comparison of one gamble to one certain outcome.  But our problems might get even more complex if we had more options.  Suppose that we introduce a fourth outcome, water.  Now, $X = \{$coffee, tea, water, soda$\}$.  And suppose Mandy exhibits the following preferences:
+\begin{enumerate}
+\item tea $\succ$ soda $\succ$ water $\succ$ coffee
+\item The gamble that give tea with probability 3/4 and coffee with 1/4 $\sim$ soda
+\item The gamble that gives tea with 7/8 and coffee with 1/8 $\sim$ water
+\end{enumerate}
+Even here we would run into problems. As we did before, let's set $u($tea$)=1$ and $u($coffee$)=0$. Preference 2 tells us that $u($soda$)=3/4$.  Preference 3 tells us that $u($water$)=7/8$.  But Preference 1 tells us that soda $\succ$ water. We have another inconsistency.
+
+%^^^ This is inconsistent with independence.  Maybe come back and show why (or an excercise)
+
+Given all these, we might ask: what constraints can we impose on Mandy's choices in order to ensure this strategy works?  Then, we can ask two different questions: do those constraints seem normatively reasonable (does it seem like Mandy {\it ought} to obey them)?  Of course, we might answer ``no.''  They might seem too strong (or even too weak). As a second question we might ask: do  people usually, in fact, obey them (whether or not they should)?  And we might come to different or similar conclusions.
+
+\section{The von Neumann\breakslash Morgenstern axioms}
+
+\marginnote{The theory is presented in their famous book \fullcite{VonNeumann1953}.}
+The mathematician John von Neumann and the economist Oskar Morgenstern created a beautifully simple theory which does what we are looking for.  It was motivated by an area of philosophy and mathematics called ``measurement theory'' which focuses on how we can convert ``qualitative'' judgments into numbers.  And that's essentially what we are doing here: converting a qualitative judgment (``this is better than that'') into a number.  
+
+As we've done before, we will start with a set $X$ which represents all the possible individual rewards that Mandy might get.  Unlike before, our agent won't be choosing anything in this set (at least, not exactly). Instead, this is often thought of as all the outcomes from all the possible gambles she might confront.  If we imagine Mandy is going to a casino and playing roulette, $X$ would include all the possible amounts of money she might win or lose.  If we are thinking about someone deciding whether to take an umbrella to work, this should include the possibilities of getting wet (or not) along with the benefits and costs of having an umbrella.   Examples abound.
+
+While the theory is capable of handling $X$'s that are infinitely large, we would need some different mathematics.  So to keep the problems (relatively) simple, we will always assume that $X$ has only finitely many members. Of course, $X$ can be very, very large but still be finite. So this constraint isn't particularly serious for representing most every-day decisions.
+
+Now we need to represent gambles.  A gamble will be defined as a probability distribution over the objects in $X$. That is, a gamble $g: X \to [0,1]$ such that:
+\[\sum_{x \in X} g(x) = 1\]
+We will then let $Q$ be the set of all gambles over $X$.
+
+\nomenclature{$g, h, i$}{Used to denote arbitrary gambles, that is probability distributions over the prize space.}
+
+\nomenclature{Q}{The set of all objective probability gambles over a specified finite prize space.}
+
+Important members of $Q$ are the certain gambles that assign probability 1 to a single outcome in $X$.  We will often just write these as the outcome itself. So, strictly speaking ``coffee'' refers to the gamble which gives you ``coffee'' with probability 1.  This is a bit of a pedantic point, but worth keeping straight.
+
+We will also need to think about what it means to combine gambles with one another. Often these are called {\it compound} gambles, although they might be nonetheless quite simple.  To understand what we mean, you might imagine that I am offering to flip a coin.  If the coin comes up heads I'll give you a lottery ticket. If it comes up tails, I'll give you one free spin of a roulette wheel.  This is a kind of compound gamble, where the ``prize'' from flipping the coin is itself another gamble.
+
+We will invent an operation $\oplus$ which allows us to combine two gambles into a compound gamble. Suppose that $p$ is a number in $[0,1]$.  Then you can think of this object $p g \oplus (1-p) h$ as a gamble where I first flip a coin that has probability $p$ of coming up heads. If it comes up heads, you win gamble $g$.  If it comes up tails, you win gamble $h$. This is what we mean by a ``compound'' gamble. It's a gamble that pays in other gambles.
+
+\nomenclature{$\oplus$}{Gamble addition/compounding. $0.75 g \oplus 0.25 h$ represents the gamble that pays $g$ with probability 0.75 and $h$ with probability 0.25. Importantly distinct from regular numerical addition $+$.}
+
+Will we just keep adding layers and ever-multiplying compoundness of gambles?  No, in fact, what we are going to assume is that $pg \oplus (1-p)h$ actually picks out a different gamble already in $Q$. Stated more formally,  $p g \oplus (1-p) h$ picks out the gamble $r \in Q$ such that for every $x \in X$, $r(x) = p g(x) + (1-p) h(x) $.
+
+We should stop here for a minute and talk about this.  For many mathematically minded folks, this seems quite trivial and obvious.  But hidden in the mathematical definition is a real assumption that might be neither normative required or descriptively accurate.  The assumption is sometimes called {\it the reduction of compound gambles}.  
+
+The reduction of compound gambles requires that we treat complex gambles exactly the same as simpler ones.  For illustration, we might ask if you think these two gambles are identical (in the sense that any agent will---or should---treat them as the same):
+\begin{enumerate}
+\item Teddy offers Mandy the gamble where Teddy will go to the coffee shop and buy her a tea with probability 1/4, a soda with probability 1/2, and a coffee with probability 1/4.
+\item Teddy offers Mandy the gamble where first Teddy will flip a fair coin. If it comes up heads, he'll give her a soda right away.  If not, he'll go to the coffee shop and flip the coin a second time.  Then if it comes up heads on the second flip, he'll buy her a tea. If not, he'll buy her a coffee.
+\end{enumerate}
+This might seem to you obviously the same.  Or maybe not.  We won't have much time to address this issue, but it is worth noting it since, in some contexts, people have advocated that this should or is not how people think about all compound gambles.  We will, however, proceed as if it is.
+
+With this in hand, we will now suppose that Mandy has a preference relation $\succsim$ which is transitive and complete defined over $Q$ (the set of all gambles over $X$).  As you will recall from chapter~\ref{c:certainty}, we could also do this with choice functions where Mandy obeys Sen's $\alpha$ and $\beta$. 
+
+This is our first axiom:
+\begin{definition}[Axiom 1]
+$\succsim$ is complete and transitive defined over $Q$.
+\end{definition}
+
+This inherits with it all the concerns that we laid out in chapter~\ref{c:certainty}. We won't rehearse them here, but they are not solved by moving to gambles.  $Q$ is now infinite, and contains objects which are arbitrarily close to one another.  So problems, like the concern about just noticeable differences, might be especially worrying in this context.
+
+As we saw in previous section, this won't be enough. All the strange examples I showed you there could be expanded to be complete and transitive preferences over $Q$.  So we need to add two additional axioms which will, as we'll see in the next section, prevent those (and many other) preferences.
+
+\begin{definition}[Axiom 2, Independence]
+For all $g, h, i \in Q$ and all $p \in (0,1]$, if $g \succ h$ then $p g \oplus (1-p) i \succ p h \oplus (1-p) i$
+\end{definition}
+\nomenclature{$(], [)$}{Used to denote the half-open interval of numbers. For example (0,1] denotes the set of real numbers that are strictly greater than 0 and less than or equal to 1.} Before we talk about this axiom, please note the condition ``$p \in (0,1]$''  This is called a ``half open'' interval.  If you haven't seen it before, it is a compact way of saying $p$ is strictly greater than 0 and less than or equal to 1.
+
+The independence axiom can be motivated by thinking (again) about numbers.  If two numbers $a$ and $b$ are such that $a > b$, then for any number $c$, $a + c > b + c$.  A similar thing is going on with independence, except the numbers are gambles and addition is replaced by gamble mixing, $\oplus$.  The comparison to numbers can make this seem less controversial than it is, however.  There are some interesting counter examples to this axiom, which we will discuss later in this chapter. 
+
+Our last axiom eliminates many counterexamples that people often find plausible.  It prevents Mandy from adopting the attitude ``I don't gamble'' and preferring all certain options to uncertain ones.  It also prevents decision rules that only pay attention to the best- or worst-case outcomes (like maximin and maximax).  
+
+\nomenclature{$()$}{Used to denote the open interval of numbers. For example (0,1) denotes the set of real numbers that are strictly greater than 0 and strictly less than 1.}
+
+\begin{definition}[Axiom 3, Continuity]
+For all $g, h, i \in Q$, if $g \succ h \succ i$ then there exists $p, q \in (0,1)$, where $p g \oplus (1-p) i \succ h \succ q g \oplus (1-q) i$
+\end{definition}
+Again note the ``open'' interval, which says that $p$ and $q$ are both greater than 0 and less than 1.
+
+Like with Independence, thinking about numbers is helpful here.  Suppose three numbers $a > b > c$. There is some fraction $p \in (0,1)$ such that $p a + (1-p) c > b$.  Depending on how far apart $a$, $b$, and $c$ are, $p$ might be very large, but there will always be one.  The continuity axiom is saying the same for gambles.
+
+What this axiom eliminates (among other things) is ``a bad thing so bad that you will avoid it no matter what.''  Suppose that gamble $i$ is sooo bad that you would sacrifice anything to avoid even a tiny probability of it.  In that case, although $g \succ h \succ i$, you would always prefer $h \succ p g \oplus (1-p) i$ for any $p<1$.  Continuity prevents you from feeling this way about anything.  It also prevents the symmetric case where you love something so much that you would give anything for even the tiniest chance of getting it.
+
+It turns out that these three axioms are all you need to guarantee the strategy I described above will work.  Before proving that fact, though, I would like to take a moment to discuss one reason why the axioms are controversial. 
+
+\section{The Allais paradox}
+
+\marginnote{Allais originally published his paradox in French in:~\fullcite{allais1953}.} The paradox was suggested by Maurice Allais in the early 1950s.  Initially he proposed his paradox as a thought experiment, but there have since been many (many!) actual experiments to validate his concern.
+
+Allais proposed that you consider two different choices between two different sets of gambles.  Here is choice 1. Before reading any further, take a moment and decide which of the two gambles you prefer or whether you are indifferent.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{cccc}
+    \toprule
+    \multicolumn{2}{c}{Gamble $g_1$} & \multicolumn{2}{c}{Gamble $g_2$} \\
+    {\bf Outcome} & {\bf Probability} & {\bf Outcome} & {\bf Probability} \\
+    \cmidrule(lr){1-2}\cmidrule(lr){3-4}
+    \$1 million & 1.0                 & \$5 million   & 0.10 \\
+                &                     & \$1 million   & 0.89 \\
+                &                     & \$0           & 0.01 \\
+    \bottomrule
+\end{tabular}
+\medskip
+\caption{Choice 1}
+\end{table}
+
+Choice 2 involves two different gambles. Again, take a second to think about which you might choose.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{cccc}
+    \toprule
+    \multicolumn{2}{c}{Gamble $g_3$} & \multicolumn{2}{c}{Gamble $g_4$} \\
+    {\bf Outcome} & {\bf Probability} & {\bf Outcome} & {\bf Probability} \\
+    \cmidrule(lr){1-2}\cmidrule(lr){3-4}
+    \$1 million & 0.11                & \$5 million   & 0.10 \\
+    \$0         & 0.89                & \$0           & 0.90 \\
+    \bottomrule
+\end{tabular}
+\medskip
+\caption{Choice 2}
+\end{table}
+
+Many people (although not everyone) prefer $g_1 \succ g_2$ in Choice 1.  In Choice 2, gamble $g_4 \succ g_3$.  Although it is not obvious at all at first, this pair of choices is inconsistent with the the combination of Axiom 1 and 2 (Independence).  
+
+We will demonstrate this formally in a moment, but you can get a sense for the problem with a simple illustration.  Imagine that the gambles are created using one of those giant lottery-ball machines.  There is a container with balls numbered 1-100.  Each ball corresponds to a prize in the different lotteries as follows:
+
+\begin{figure}[h!]
+\centering
+    \begin{game}{4}{3}[][Number]
+                & 1-10 & 11-99 & 100 \\
+     Gamble $g_1$ & \$1 million & \$1 million & \$1 million \\
+     Gamble $g_2$ & \$5 million & \$1 million & \$0  \\
+     Gamble $g_3$ & \$1 million & \$0 & \$1 million \\
+     Gamble $g_4$ & \$5 million & \$0 & \$0
+    \end{game}
+    \medskip
+    \caption{A normal form representation of the four gambles}
+\end{figure}
+
+Notice something about these gambles.  If you ignore the middle column for a moment, Gambles $g_1$ and $g_3$ are identical and Gambles $g_3$ and $g_4$ are identical.  These pairs only differ in terms of what will happen when balls 11-99 are drawn.  But Gambles $g_1$ and $g_2$ have the same outcome in that setting.  So too do Gambles $g_3$ and $g_4$.  In a way, you think about moving from choice 1 to choice 2 by simply adding or removing a common part.  So this is, intuitively, why you can't prefer $g_1 \succ g_2$ and $g_4 \succ g_3$.  
+
+This isn't yet a proof that these gambles are incompatiable.  To show why this is true, we will need a helper gamble, $h = (10/11) \$5M \oplus  (1/11) \$0$.  Take a moment to convince yourself that Gamble $g_2 = 0.11 h \oplus 0.89 \$1M$.  Gamble $g_1$ can also be rewritten as $g_1 = 0.11 \$1M \oplus 0.89 \$1M$.  So, if Mandy prefers $g_1 \succ g_2$ that can be rewritten as $0.11 \$1M \oplus 0.89 \$1M \succ 0.11 h \oplus 0.89 \$1M$.  Notice that the $0.89 \$1M$ is common to both sides.  As a result of the Independence axiom this means that $\$1M \succ h$ (convince yourself that this is true).
+
+Now if it's the case that $\$1M \succ h$, we can apply the Independence axiom again in order to get $0.11 \$1M \oplus 0.89 \$0 \succ 0.11 h \oplus 0.89 \$0$.  Notice that the first gamble is exactly Gamble $g_3$ and the second gamble is Gamble $g_4$. So this just is that $g_3 \succ g_4$.  
+
+If you obey the Independence axiom (and enough of Axiom 1 to make $\succ$ make sense), then you cannot prefer $g_1 \succ g_2$ and $g_4 \succ g_3$. 
+
+\section{The representation theorems}
+
+Let us return to the question we started with: if agents do obey these axioms can we be guaranteed that the informal strategy described in section~\ref{s:vnm-strategy} will work?  The answer is yes, and to prove it we will appeal to the first of two {\it representation theorems}. 
+
+When we were dealing with choices under certainty, we defined representation in a relatively simple way.  Here we will add a little more structure by taking advantage of the structure inside the gambles:
+
+\begin{definition} 
+A utility function $u: X \to \mathbb{R}$ represents a relation $\succsim$ over $Q$ in case for every $g, h \in Q$:
+\[g \succsim h \text{ iff } \sum_{x \in X} u(x)g(x) \geq \sum_{x \in X} u(x)h(x)\]
+\end{definition}
+
+\subsection{The first representation theorem}
+
+The first representation theorem (sometimes also just called ``the representation theorem'') proves that if Mandy obeys the three von Neumann\breakslash Morgenstern axioms she can be represented by a utility function in the way we defined above.  It also shows the reverse, that if she can be represented by a utility function, then she obeys the axioms (although this second direction is usually regarded as a little less interesting).
+
+\begin{proposition}[First representation theorem]
+$\succsim$ obeys Axioms 1-3 if and only if there exists a utility function that represents it
+\end{proposition}
+
+Proving this theorem actually takes a little bit of work.  We will only prove the hard direction (if she obeys the axioms, then she can be represented by a utility function), and to do that we will employ a few Lemmata (mini-theorems). Henceforth we will assume that our preference relation $\succsim$ obeys all three axioms and we will prove a few additional properties that it has as a result.
+
+The first lemma encodes what most people see as reasonable behavior. If I increase your chances of getting something you like, then you will like it more.
+\begin{lemma}
+\label{l:morebetter}
+For all $g, h \in Q$ and all numbers $1 \geq p > q \geq 0$, if $g \succ h$ then $p g \oplus (1-p) h \succ q g \oplus (1-q) h $.
+\end{lemma}
+I will leave the proof of this to you. Here's what it says: think of $g$ as a ``win''---say something like a \$10---and think of $h$ as a loss---say losing \$5.  It seems natural that one would prefer a gamble that gave you a higher chance of a win to one that gives you a lower chance of a win.  What this lemma says is that if you obey the von Neumann\breakslash Morgenstern axioms, this is what you have to do.
+
+Now to a second lemma which is really critical. Remember our strategy with Mandy was to find {\it the} probability where Mandy was indifferent between Teddy's gamble between tea and coffee and getting a soda for sure.  Two concerns we mentioned with this strategy were that maybe there is no such probability or maybe there is more than one. This lemma eliminates both of those possibilities.
+
+\begin{lemma}
+\label{l:vnm-indiffpoint}
+Suppose $g \succsim h \succsim i$ and $g \succ i$.  There exists a unique $p \in [0,1] $ such that $h \sim p g \oplus (1-p)i$
+\end{lemma}
+
+\begin{proof}
+First we will prove that there is such an $p$.  Let's define such a candidate $p = \sup\{q \in [0,1]: h \succsim qg \oplus (1-q)i\}$, that is $p$ is the ``least upper bound'' of all the gambles over $g$ and $i$ where $h$ is preferred.  Now let's consider the gamble $p g \oplus (1-p) i$ relative to $h$.  Because of the completeness of $\succsim$ (Axiom 1) there are three cases to consider:
+\begin{itemize}
+    \item Case 1: $p g \oplus (1-p) i \succ h$. By Axiom 3, this means there must be a $q$ such that $ q (p g \oplus (1-p) i) \oplus (1-p) i \succ h$. Distributing q over this equation, that is: $pq g \oplus (1 - pq) i \succ h$.  Notice $pq < p$. By definition of $p$, there must be some $r$ such that $p \geq r > pq$ such that $h \succsim rg \oplus (1-r)i$ (otherwise $p$ could not be the least upper bound). By Lemma~\ref{l:morebetter}, $rg \oplus (1-r)i \succ pq g \oplus (1-pr)i$.  And now we have a violation of transitivity: $h \succsim rg \oplus (1-r)i \succ pq g \oplus (1-pr)i \succ h$.
+    \item Case 2: $h \succ p g \oplus (1-p) i$. We can run basically the same argument that we did in case 1, except in reverse
+    \item So therefore, it must be the case that $pg \oplus (1-p) i \sim h$.
+\end{itemize}
+
+Now, we have to prove that $p$ is unique, that there aren't any more of them. Thankfully, this comes from lemma~\ref{l:morebetter}.  If we choose a value $q > p$, this must be strictly preferred (because $g \succ i$).  And if we choose a $q < p$ this must be strictly dis-preferred.
+\end{proof}
+
+This lemma is very powerful, because it eliminated many of the failure points that we discussed before.  Now we know that for any three gambles there is some gamble between the best and worst that is equivalent to the middle.
+
+A third lemma guarantees that there is a best and worst gamble, in fact the best gamble is getting the best prize for sure and the worst gamble is getting the worst prize for sure.
+\begin{lemma}
+\label{l:vnm-max}
+There exists an $x^\circ \in X$ and $x_\circ \in X$ such that for all $g \in Q$, $x^\circ \succsim g$ and $g \succsim x_\circ $
+\end{lemma}
+
+The last lemma is one of these things that seems very intuitive when you understand it.  It is called the ``substitution lemma'' because it allows you to substitute equivalent gambles in for one another.  
+
+\begin{lemma}
+\label{l:vn-substitution}
+For all $g, h, i \in Q$ and $p \in [0,1]$ if $g \sim h$ then $pg \oplus (1-p) i \sim ph \oplus (1-p) i$.
+\end{lemma}
+
+This lemma is analogous to what you do in algebra, when you know that $x = y$, then you can substitute $x$ for $y$ in any equation.  Here the lemma says that when you know that when Mandy is indifferent between $g$ and $h$, then you can substitute $h$ in for $g$ in any gamble and she will be indifferent between these two.
+
+Okay. That's a lot, but it actually makes our lives much simpler. We are now in a position to prove the harder direction of the first representation theorem.  That is, we will prove that if an agent obeys Axioms 1-3, then the agent can be represented by a utility function.
+
+\begin{proposition}
+If $\succsim$ defined over $Q$ obeys Axioms 1-3, then there exists a utility function, $u: X \to \mathbb{R}$ that represents $\succsim$.
+\end{proposition}
+
+The following is a sketch of the proof, with a few tedious steps omitted: 
+\begin{proof}
+Our basic strategy is to construct a function which assigns values to all gambles in $Q$.  We will then define the appropriate $u$ in terms of that and prove that $u$ function represents $\succsim$.  
+
+Before we do that, we need to eliminate one possibility from the very outset.  Suppose that someone is totally indifferent among all gambles, that is for all $g, h \in Q$, $g \sim h$ (can you see why this is consistent with the axioms?).  Then it is quite easy to see that any utility function that assigns the same number to all outcome in $X$ will represent it. So that case is handled. 
+
+For the remainder of the proof, we will presume that there is at least one pair $g, h \in Q$ such that $g \succ h$.
+
+{\bf Step 1:} Define the function.  By Lemma~\ref{l:vnm-max}, there exists a maximal and a minimal element $x^\circ$ and $x_\circ$. By the assumption we just made, we can show that $x^\circ \succ x_\circ$.  For every $g \in Q$, define $f(g)$ as the $p$ such that $p x^\circ \oplus (1-p) x_\circ \sim g$.
+
+{\bf Step 2:} Show some properties of the function, $f$.
+\begin{enumerate}
+    \item $f$ is well defined.  By Lemma~\ref{l:vnm-indiffpoint} we know that there exists a unique such $p$.
+    \item $f(g) \geq f(h)$ iff $g \succsim h$.  
+    \item $f(pg \oplus (1-p)h) = pf(g) + (1-p)f(h)$ ($f$ is affine).
+\end{enumerate} 
+
+The first two properties are not terribly difficult to prove, and they may be used as a homework problem.  The third one is trickier, and I'll give you a hint: you must use lemma~\ref{l:vn-substitution}.
+
+{\bf Step 3:} Define $u$ and prove that $f$ is the expectation of $u$. We start by defining $u$ in terms of $f$. For all $x \in X$, define $u(x) = f(g)$, where $g(x) = 1$ (that is, $g$ is the gamble that gives out outcome $x$ for certain). We will now prove the following, which will get us very close to showing that $u$ is a representation:
+\begin{equation}
+\label{e:vn-induction}
+f(g) = \sum_{x \in X} u(x)g(x)
+\end{equation}
+
+To do with we will do induction on the size of the support of $g$, that is the number of outcomes $x \in X$ that are assigned probability greater than $0$ by $g$.  (Intuitively: how many things are possible under $g$).
+
+Base case: $g(x) = 1$ for some $x$.  That is, $g$ gives one outcome for sure. Equation~\ref{e:vn-induction} is true by definition of $u$.
+
+Inductive case: Suppose equation~\ref{e:vn-induction} is true for all $g$ with support of $n-1$, now consider $g$ with support $n$ and an element $z$ such that $g(z) > 0$. Consider an $h$ which is just like $g$ except with the element $z$ removed and the probabilities renormalized.
+\[
+            h(x) = \begin{cases}
+            0 & x = z \\
+            g(x)/(1-g(z)) & x \ne z
+            \end{cases}
+\]
+By definition $h$ has support $n-1$, so equation~\ref{e:vn-induction} holds for $h$.  Note that $g = g(z) z \oplus (1-g(z))h$. Because $f$ is affine, $f(g) = g(z) f(z) + (1-g(z))f(h)$. By the inductive hypothesis $f(h) = \sum_{x \in X} h(x) u(x)$. Putting these two together, we get that $f(g) = \sum_{x \in X} g(x) u(x) $.
+
+{\bf Step 4}: Show that $u$ represents $\succsim$.  
+
+Suppose that $g \succsim h$.  Then by property 2 in step 2, we know that $f(g) \geq f(h)$.  From Step 3, we know that $f(g) = \sum_{x \in X} u(x)g(x)$ and $f(h) = \sum_{x \in X} u(x)h(x)$. So we have that $\sum_{x \in X} u(x)g(x) \geq \sum_{x \in X} u(x)h(x)$.  
+
+Now suppose that $\sum_{x \in X} u(x)g(x) \geq \sum_{x \in X} u(x)h(x)$.  So, we know that $f(g) \geq f(h)$ and by property 2 in step 2, we know that $g \succsim h$. 
+
+This shows that $u$ represents $\succsim$.
+\end{proof}
+
+There is a curious fact about this proof that you might have noticed.  In the proof that I stated, we never actually appealed to any of the axioms directly.  This does not mean they are irrelevant. The axioms were featured in the proofs of the Lemmata and might also be involved in the proof of features 1-3 of the function $f$.  So they are there, although hidden behind how I've structured the proof.
+
+The second thing to note is that this proof does depend on the finiteness of $X$. Suppose that $X$ was all the natural numbers and represented an amount of money you might make.  Then lemma~\ref{l:vnm-max} would no longer be true, there would be no ``maximal'' element.  For every amount of money, I would prefer making more.  
+
+It turns out that we could redo much of what we've done with a space of infinite prizes.  The mathematics is more complicated and we have to be careful in how we construct $Q$, but the basic facts remain the same.  I've focused on the finite case because it captures most of what we care about.
+
+\subsection{The second theorem: uniqueness}
+
+In our proof of the first theorem, we constructed a {\it particular} $u$ that was defined on the interval of $[0,1]$.  But is that the {\it only} such function?  The answer to this question is ``no.''  In fact there is an infinite family of utility functions that represent any particular $\succsim$.
+
+The utility function we defined in our proof from the last section was the result of assigning the best outcome $u(x^\circ) = 1$ and the worst outcome $u(x_\circ) = 0$.  You might guess that we could have done this differently. We could havve assigned the best outcome some other number like 10 or 7 or 43, and re-scaled everything else to match. If you thought that, you would be right.  In fact, all utility functions that represent someone will be rescalings of one another.  We'll say that in a lemma and a proposition.
+
+\begin{lemma}
+If $\succsim$ obeys Axioms 1-3 and $u$ represents it, then for any arbitrary real numbers $a > 0$ and $b$, the function $f(x) = a u(x) + b$ also represents $\succsim$
+\end{lemma}
+
+I won't prove this lemma, it follows from a basic fact about numbers. The more interesting claim is that any two functions that represent a preference relation must be related in this way.
+\begin{proposition}
+\label{p:vn-rep-2}
+Suppose that $\succsim$ obeys Axioms 1-3, if $u$ and $u'$ both represent $\succsim$ then there exists real numbers $a > 0$ and $b$ such that $u = au' + b$
+\end{proposition}
+
+\begin{proof}
+Since we're always living in the world of the finite, we can define $\bar{u}$ as the maximum value that $u$ can take and $\underline{u}$ as the minimum.  Same for $\bar{u}'$ and $\underline{u}'$.   We can now define two new function:
+\begin{equation*}
+f(x) = \frac{u(x) - \underline{u}}{\bar{u} - \underline{u}}
+\end{equation*}
+\begin{equation*}
+g(x) = \frac{u'(x) - \underline{u}'}{\bar{u}' - \underline{u}'}
+\end{equation*}
+By the previous lemma, we know that $f(x)$ and $g(x)$ both represent $\succsim$.
+
+Now I need to prove that $f(x) = g(x)$. Let $x^\circ$ be the best outcome (as guaranteed by lemma~\ref{l:vnm-max}). We can verify that $f(x^\circ) = g(x^\circ) = 1$.  Similarly with the worst outcome, $x_\circ$, $f(x_\circ) = g(x_\circ) = 0$. For any other outcome $x$, we know that there is a unique $p$ such that $x \sim p x^\circ \oplus (1-p) x_\circ$ (by lemma~\ref{l:vnm-indiffpoint}).  So $f(x) = p f(x^\circ) + (1-p)f(x_\circ) = p g(x^\circ) + (1-p)g(x_\circ) = g(x)$.
+
+So this means that:
+\begin{equation*}
+\frac{u(x) - \underline{u}}{\bar{u} - \underline{u}} =
+\frac{u'(x) - \underline{u}'}{\bar{u}' - \underline{u}'}
+\end{equation*}
+With some tedious algebra, we can use this to show that $u = a u' + b$, with:
+\begin{align*}
+    a & = \frac{\bar{u} - \underline{u}}{\bar{u}' - \underline{u}'} \\
+    b & = \underline{u} - \frac{\underline{u}'(\bar{u} - \underline{u})}{\bar{u}'-\underline{u}'}
+\end{align*}
+\end{proof}
+
+What is shows is that utility is like temperature in a certain respect.  If I say ``it is twice as hot today compared to three months ago,'' this statement is meaningless.  Without specifying a specific temperature scale, one cannot say it is ``twice as hot.''  Utility is the same way.  We cannot say ``Mandy loves tea twice as much as coffee.''
+
+We can, however, talk about averages.  I can meaningfully say ``on average it is hotter in Pittsburgh in August than it is in January.'' That statement will be true regardless of which temperature scale we select.  The same is true about utility.  If the expected utility for gamble $g$ is higher than $h$ using one utility function that represents Mandy's preference, then it will be for {\it all} utility functions that represent Mandy's preferences.
+
+\section{Psychological realism and ``as-if''}
+
+The representation theorem shows that if you obey the three von Neumann\breakslash Morgenstern axioms we can represent you with a utility function (and vice versa).  What it doesn't show is that you are actually using any utility functions in your thinking.
+
+This is a subtle distinction and many people (even famous professors) struggle with it sometimes.  But it is really important to understanding what the theorem is and is not telling us. 
+
+To help you along, let me give you a quick analogy.  Imagine that you see a plant on the floor of a forest that is growing at a very strange angle.  At first you don't quite realize why it's growing in such a strange way, but then you realize that there is a break in the trees such that the plant gets a lot of morning light by growing that way.  
+
+When your friend asks you ``hey, what's up with that plant?'' You respond, ``Oh it's trying to get to that opening in the trees to get more light.''  How would you respond if your friend said, ``That's stupid, plants don't have a brain, they can't be `trying' to do anything.  What's more, they don't have eyes, so they can't see that there is light over there.''
+
+You might respond by saying that of course you know the plant isn't a person.  The word ``trying'' here is a placeholder for a much more complex biochemical process whereby the part of the plant exposed to light grows faster and fuller than the part that isn't.
+
+I'm not saying that people are as dumb as plants (although occasionally I wonder about some people).  But, just as we talk about a plant ``trying to grow toward the light,'' in decision theory we talk about people ``maximizing their utility function.''  That doesn't mean we think they have a utility function in their heads and are carefully calculating its maximum.  Rather, we are saying whatever complicated psychological process is going on, they are behaving {\it as if} they are maximizing a utility function.
+
+As we've shown, there is no guarantee that someone will be behaving {\it as if} they are maximizing a utility function.  If they violate one of the axioms, they are not behaving that way.  But if they obey the axioms then we can talk about them in the same way we talk about the plant.
+
+\section{Conclusion}
+
+In this chapter we showed how we can combine a theory of choice under certainty (chapter~\ref{c:certainty}) and a theory of uncertainty as probability (chapter~\ref{c:probability}) to a choice under uncertainty.  This theory is incredibly influential, and has been the basis of much of economics and other sciences for almost a century now.  We've also discussed some concerns.
+
+The theory does make use of ``known'' probabilities.  That is, we assumed that the gambles were represented with known (maybe objective?) probabilities.  The decision theories of Anscombe/Aumann and Savage both do away with this assumption.  Anscombe/Aumann goes part way, and Savage goes all the way. 

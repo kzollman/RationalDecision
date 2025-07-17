@@ -1,0 +1,449 @@
+\chapter{Decisions under certainty}
+\label{c:certainty}
+
+Although much of decision theory is focused on decisions where there is some degree of uncertainty, we will start with a far simpler setting: deciding between known options.  Here our decision maker---we'll call her Mandy---faces a simple choice: she must pick which, from a set of possible things, she would want to have or bring about. Suppose Mandy is a judge in a painting contest.  She sees the paintings that have been entered in the contest, she has no uncertainty about what painting she is looking at. She simply must select which she would like to choose as the winner.
+
+In one respect these are ``simple'' decisions because all Mandy must decide is what thing she prefers; she does not have to try and evaluate uncertainty.  When the judge selects a winner, she knows what will happen and what the winning painting will look like. On the other hand, the decision may not be simple because the options might be quite hard to compare. Our judge may have difficultly deciding which painting she prefers even though there is no uncertainty in the technical sense of that word.
+
+There is some debate about how often we really find ourselves in this circumstance.  If Mandy goes to a restaurant, even one she knows well, and she orders a burrito, is this a situation of decision under certainty?  In one sense, yes.  She will almost certainly get a burrito.  But it is possible that the burrito might be better or worse than normal or it might contain an unexpected ingredient. More radically, perhaps Mandy doesn't know how much she will enjoy a burrito today. She's uncertain about her own reaction.
+
+Whether or not these decisions are common, we will start here because they are simpler and they allow us to lay the ground work for decisions with uncertainty later.
+
+\section{Preference and indifference}
+
+We will start with a simple question: what does it mean to prefer one thing over another?  This might seem so simple as to not need inquiry, but we will inquire nonetheless.
+
+Let us start by supposing that Mandy has a set of potential objects under consideration: an apple, some cherries, and a banana.  We will ask Mandy what she prefers from this set.  In particular, we will ask her to chose from among each possible pair which option she prefers.  
+
+``Prefers'' is already a tricky concept.  It can mean several different things in different contexts.  Importantly it might mean different things in the normative and descriptive context, and its relationship to someone's behavior might be somewhat tenuous.  We won't get into this issue now, instead we will take ``prefers'' as a kind of primitive of the theory.
+
+Prefers, for the moment at least, will be defined on pairs of objects.  Mandy prefers one object $x$ to another object $y$.  This allows us to represent preferences with a mathematical relation, denoted: $x \succ y$. There may be times that Mandy cannot answer, because she does not have a preference for one over the other.  In such a case, we will define another relation which we call ``indifference'' and this will be symbolized by $x \sim y$.
+
+\nomenclature{$x,y,z$}{Arbitrary prizes. These might be objects of choice directly, or the result of chosing a gamble and being awarded this}
+\nomenclature{$\succ$}{Strict preference. $x \succ y$ is read as ``One strictly prefers $x$ to $y$.'' Sometimes written with a subscript to denote a particular person's preference or a preference according to a certain standard. $\succ_i$ indicates preference according to $i$.}
+\nomenclature{$\sim$}{Indifference. $x \sim y$ is read as ``One is indifferent between $x$ and $y$.'' Sometimes written with a subscript to denote a particular person's preference or a preference according to a certain standard. $\sim_i$ indicates indifference according to $i$. }
+\nomenclature{$X$}{The grand set of all possible prizes.}
+
+We will make a series of assumptions about the mathematical structure of these two relations.   To do so, we will assume we have some grand list of (potential) options over which the relations are defined.  Let that set be denoted $X$. The assumptions are divided into three groups.
+\begin{itemize}
+    \item Constraints on $\succ$
+    \begin{itemize}
+        \item $\succ$ is irreflexive: it is never the case that $x \succ x$ (or we might write this: for all $x \in X$, $x \nsucc x$)
+
+\nomenclature{$\in$}{Set theoretic membership. $x \in X$ is read as ``$x$ is in the set $X$.''}
+        
+        \item $\succ$ is asymmetric: if $x \succ y$ then $y \nsucc x$
+        \item $\succ$ is transitive: if $x \succ y$ and $y \succ z$, then $x \succ z$
+    \end{itemize}
+    \item Constraints on $\sim$
+    \begin{itemize}
+        \item $\sim$ is reflexive: for all $x \in X$, $x \sim x$
+        \item $\sim$ is symmetric: if $x \sim y$ then $y \sim x$
+        \item $\sim$ is transitive
+    \end{itemize}
+    \item Joint constraints
+    \begin{itemize}
+        \item Strictness: if $x \succ y$ then $x \nsim y$
+        \item Joint completeness: for all $x$ and $y \in X$: either $x \succ y$, $y \succ x$, or $x \sim y$
+        \item Joint transitivity: if $x \succ y$ and $y \sim z$, then $x \succ z$
+    \end{itemize}
+\end{itemize}
+
+\marginnote{As an exercise, can you figure out which one of these nine conditions is entailed by the other eight?} In order to highlight important properties, I've actually listed more properties than is necessary.  One of these nine properties is entailed by the other eight.
+
+We could have done everything more simply and cleanly by starting with a slightly less intuitive relation.  Consider $\succsim$, which means something like ``not worse than.''  If $x \succsim y$, then we would say that $x$ is not worse than $y$.  If we start with $\succsim$ we can define $\succ$ and $\sim$ in terms of it
+\begin{definition}
+\label{d:succ}
+$x \succ y$ if and only if $x \succsim y$ and {\bf not} $y \succsim x$
+\end{definition}
+\begin{definition}
+\label{d:sim}
+$x \sim y$ if and only if $x \succsim y$ and $y \succsim x$
+\end{definition}
+
+\nomenclature{$\succsim$}{Weakly preferred to.  $x \succsim y$ is read as ``One weakly prefers $x$ to $y$'' or ``One either pefers $x$ to $y$ or is indifferent between them.'' Sometimes written with a subscript to denote a particular person's preference or a preference according to a certain standard. $\succsim_i$ indicates preference according to $i$.}
+
+With this definition we can now capture the nine constraints above with a far simpler representation.  We can just say that $\succsim$ is transitive and complete.  
+
+We defined transitivity above, so I won't repeat it here.  Completeness is also quite simple, it requires that for every $x, y \in X$ at least one of these hold $x \succsim y$ or $y \succsim x$.  Of course, in some cases both might hold.
+
+Because of its mathematical simplicity, most decision theorist define preference in this simpler way using $\succsim$ and then define the strict relations $\succ$ and $\sim$ in terms of it.
+
+\marginnote{As an exercise you might try to prove that if $\succsim$ is complete and transitive and if we define $\succ$ and $\sim$ in this way, that all of the nine conditions hold.  Do you always need both completeness \emph{and} transitivity?} If we follow this mathematically more elegant way of defining the preference relation, all of those nine properties listed above become theorems that one can prove using only the transitivity and completeness of $\succsim$.  Let me show you how you can prove the transitivity of $\succ$ if it is defined according to definition~\ref{d:succ}.
+
+\begin{proposition}
+If the relation $\succsim$ defined over $X$ is transitive and $\succ$ is defined according to definition~\ref{d:succ}, then $\succ$ is transitive
+\end{proposition}
+
+\begin{proof}
+Suppose that $x, y, z \in X$ and that $x \succ y$ and $y \succ z$.  Since $x \succ y$ then by the definition of $\succ$, $x \succsim y$.  Similarly since $y \succ z$, then $y \succsim z$.  Since $\succsim$ is transitive by assumption, this means that $x \succsim z$. 
+
+Now we must show that it is not the case that $z \succsim x$.  Suppose that it was the case that $z \succsim x$. We have already shown that $x \succsim y$, so by transitivity, this would mean that $z \succsim y$.  However, we assumed that $y \succ z$, which by definition requires that it not be the case that $z \succsim y$. This contradicts our assumption.
+
+Since we have shown that $x \succsim z$ and it is not the case that $z \succsim x$, by definition this entails that $x \succ z$
+\end{proof}
+
+Since the two ways we define it are mathematically equivalent, why not just use the simpler one?  Part of the reason I include the more complex definition, is that it allows us to pinpoint  what constraints might exhibit problems when we consider this from both the normative and descriptive perspective.  It is to this that we now turn.
+
+\section{Problems and paradoxes}
+
+\subsection{Incommensurability and completeness}
+
+Built into our definitions is the assumption that any two objects can be compared, the is the {\it joint completeness} constraint for $\succ$ and $\sim$ or alternatively the {\it completeness} constraint for $\succsim$.  In many everyday contexts, this seems quite natural, but there are also situations where this might be quite difficult.  
+
+The philosopher Ruth Chang, for example, asks the question: was Mozart a better composer than Michelangelo was a painter?\marginnote{For several different philosophers take on this problem see \fullcite{chang1998}}  This strikes many of us as a strange question, how can we compare across these two different media?  Someone who loves both classical music and Renaissance painting might be incapable of saying whether they prefer the music of Mozart or the paintings of Michelangelo.  
+
+In such cases we might opt to say that two things are incommensurable, they are simply not comparable.  It would be wrong to say that one is better than the other, {\it but also wrong to say they are equivalent.}  It is that last clause that creates the problem for the decision theorist.  Because, under our assumptions, if you don't say that Mozart is better than Michelangelo or the reverse we are forced to say one is indifferent.
+
+To see why this might frustrate some people, consider Sophie's choice from the famous novel.\marginnote{\fullcite{styron1979}}  Sophie must choose which of her children will die.  She loves them equally, so she cannot decide which she prefers.  Under our axioms, if she cannot choose one over the other, then we would say she's indifferent.  
+
+What's wrong with that?  Suppose just before she was forced to make her choice, someone came along and said ``I know this is a difficult decision for you, Sophie.  I want to make things easier.  Here, I will put \$10 in your daughter's pocket.'' Does this make Sophie's decision easier?
+
+Of course it doesn't.  The devastating issue for Sophie is not that she's indifferent between her two children, where any simple tie-breaker will resolve her indifference.  Rather, she cannot make a comparison.  When it comes to her children, Sophie does not obey our axiom of {\it joint completeness.}
+
+As is the case with all of our objections, we can ask two different questions about this example.  The first question: is it descriptively plausible?  That is, do we think that people might often find themselves in a situation where they cannot form a preference?
+
+This question is actually somewhat difficult to answer unless we put some structure on what we mean by ``preference.''  At first blush it seems quite right that we often don't have preferences.  Which is my favorite town in North Dakota? I have no preference, because I have never been to any towns in North Dakota. With all due apologies to people from North Dakota, I have also given very little thought to the towns there. I know nothing about them.
+
+At this level of description, completeness is obviously wrong: I simply don't have a preference.  It would also seem strange to say that I'm indifferent.  I just haven't ever thought about it.
+
+Often in discussing this theory, ``preference'' is given a more counterfactual interpretation.  It's true that I, at the moment I'm writing this, don't have a preference between towns in North Dakota.  If I won a contest that involved an all-expense-paid trip to a North Dakota town of my choice, I would investigate and form a preference.  
+
+Many economists define ``preference'' in this theory in a purely behavioral way.\marginnote{To learn more about this way of thinking and objections to it, see \fullcite{thoma2021}}  For these economists, to prefer something is simply to choose it (or to be disposed to chose it if given the chance).  If preference is defined in this way, incommensurability has less force.  At the end of the day most of would choose one thing or another if forced to do so.  While this behavioral way of defining preference makes completeness true by almost by definition, it puts more pressure on the other axioms.
+
+Another dimension to the descriptive question is to ask exactly what we mean by descriptively correct.  Humans are incredibly varied and complicated. No one doubts that somewhere in the history of our species someone has violated these axioms.  I know of no theorists who thinks they are like physical laws that constrain everyone, everywhere.  The debate about their descriptive accuracy is more of one of degree: how often and under what conditions do people behave in accordance with these axioms?  Some people think most of the time we do, that violations are rare.  Others think that violations might be more common or happen in critical enough situations that the axioms are not as accurate as we might need them to be.
+
+The second version of the question one might ask about this axiomatiziation: is it normatively correct? Of course it might be that our real preferences sometimes violate these axioms, but that when they do we regard this as a kind of personal failure.  You might point out the failure to me, and I would say ``Oh! That was stupid of me'' and attempt to correct it.  However, there may be cases where you point out the violation, and I say ``Well, so much the worse for axioms. I think my behavior is correct.''
+
+On the normative side we must address the same thorny interpretative question that we needed to address on the descriptive side.  What do we mean by a preference?  Is this a constraint on some kind of psychological state, on a disposition to have a psychological state, or a disposition to choose when forced.  And just as for the descriptive interpretation of the axioms, one might have a different normative judgment depending on how they are interpreted.
+
+In order to ask this question, let's look at three problems that have been raised for both the normative and descriptive interpretation of these axioms.  (We will introduce several more in section~\ref{s:choice-functions}.)
+
+\subsection{Preference change}
+
+Of course, you could not represent one's entire life with a single preference relation.  When I was a young child, I would certainly have preferred candy for dinner to almost anything else.  As an adult, I might still occasionally be tempted, but I (almost) never choose it.  Does that mean that the theory is already obviously wrong?
+
+Most people who use the theory would say ``no.''  The theory is about preference {\it at a time}. That is: Mandy's preferences at this exact instant obey the axioms, but not that Mandy's preferences can't change.  So long as at each time, Mandy's preferences obey the axioms, then she's fine, even if those preference are quite different from one another.
+
+This simplifies the theory, but it also introduces some difficulties.  The first is with empirical test.  I cannot at this very moment offer Mandy more than one choice. I can offer Mandy one choice and then, perhaps seconds or minutes later, offer her another.  If it appears that Mandy violates the axioms, it remains a possibility that her preferences have changed in a way that makes it look like a violation (when it really isn't).
+
+So, in reality, we must assume that preference are somewhat stable over time.  If they change rapidly, it might be indistinguishable from a violation of the axioms.  What's more, it might make any theory built on those axioms somewhat useless, since the theories will use a stable set of preferences.
+
+One must also keep this in mind when thinking about {\it what} the theory is defined over.  That is, some preferences might change very quickly as someone learns new information.  If Mandy is offered the option to purchase a delicious looking burrito for a bargain price, she might be glad to take it.  If she discovers that the burrito is, in fact, two weeks old, she might quite rapidly change her preferences.
+
+Often, people want to focus the theory on basic or fundamental preferences which change relatively slowly over time.  Mandy enjoys time with her friends.  And while her particular group of friends may be different over the years, her preference for spending time with friends may stay relatively constant.
+
+\subsection{Paradox of preference}
+
+\marginnote{This example is a modified version of one in \fullcite{anand1993}} Sometimes the particular paired choice that Mandy faces cues her to think about the choice in different ways. Suppose that Mandy goes to a friends house for tea and cookies.  Mandy loves cookies. We might imagine the following three situations:\marginnote{Please note, Mandy isn't being offered these in turn. Rather we are imagining how she might behave if given one of these choices at the outset.}
+\begin{enumerate}
+    \item Mandy is offered the choice between a large oatmeal cookie and a large chocolate chip cookie. Mandy has a slight preference for oatmeal cookies, so she chooses that one.
+    \item Mandy is offered the choice between a large chocolate chip cookie and a small oatmeal cookie. While she slightly prefers oatmeal, the size difference matters more. She chooses the large chocolate chip cookie. She's worried that choosing the larger cookie will seem greedy to her friends, but she knows that she can just lie and say ``I prefer chocolate chip.''
+    \item Mandy is offered the choice between a large oatmeal cookie and a small oatmeal cookie. While she wants the bigger one, she's worried it will seem greedy to take the larger of the two. No lie is available here, so she opts for the small cookie.
+\end{enumerate}
+
+Mandy's choice behavior violates transitivity. That occurs because different choices induce different ways of thinking about the choice. She wants bigger cookies when she can get them without seeming greedy. 
+
+For Mandy we might ask two different questions.  First, does this seem like a plausible empirical setting, one where we might expect people to habitually make these choices? 
+
+We might also ask whether we regard Mandy's choices as reasonable. Take a moment to think about your reaction to this situation.  If you pointed this out to Mandy, do you think she should recognize what happened as a mistake and revise her choices?  Or should she dig in her heals and say she was right to have those preferences?
+
+\subsection{Quinn's paradox}
+
+Suppose that someone is deciding whether to engage in a fun activity that carries with it a small risk.  For example, suppose that there is an ongoing pandemic, and Mandy must decide whether to have a small group of friends over this evening for drinks.  Mandy has many friends, and she must decide how many of her friends to invite.  As a somewhat obnoxiously pedantic person, Mandy starts by forming a list from the person she most want to invite (at position \#1) to the person she least wants to invite (at position \#$n$). 
+
+Now she must form a preference ranking over the options ``invite the first $x$ people on the list'' where $x \in {0, 1, \dots n}$.  We will denote each option by $O_x$, so $O_1$ means invite the top person, $O_2$ means invite the top two, and $O_n$ means invite everyone.  $O_0$ means ``don't invite anyone.''
+
+Our host reasons as follows, ``the disease is not common in my city and the health minister said that we can have small gatherings.  So, it is okay to have one friend over.'' Thus, $O_1 \succ O_0 $.
+
+Also, she thinks ``inviting one additional person will only increase the probability of catching the disease slightly. I really wouldn't want to hurt my friend's feelings. I think the kindness of inviting one additional person is worth the very small increase in risk from the disease.''  As a result they form the preference $O_{x + 1} \succ O_x$ for all $x \geq 1$.\marginnote{This is not exactly how Quinn put his paradox, I have modified it to be about a different topic. To see the original version, check out \fullcite{quinn1990}}
+
+\nomenclature{$>$}{Numerically greater than. Not the same as $\succ$}
+\nomenclature{$\geq$}{Numerically greater than or equal to. Not the same as $\succsim$}
+
+However, the health minister is very clear that there can be no large gatherings.  Our host doesn't quite know what large is, but she is quite certain that $n$ is large. She wants to obey the health minister, so $O_0 \succ O_n$. This set of preferences violates our axioms.
+
+This violation is related to something known as a just-noticeable-difference in psychology.  If I play you a tone that is 60 dB loud, you cannot tell that it is louder than another tone that is 60.5 dB loud.  That is less than your just-noticeable difference for sounds.  Similarly you could not tell the difference between 60.5 dB and 61 dB.  Many people can, however, tell the difference between 60 and 61 dB.
+
+Like with all questions we can approaches this from both a descriptive and normative perspective.  From a descriptive perspective, just noticeable differences are a well confirmed phenomenon for all modes of perception. Do such problems ``scale up'' in the way I described?  Obviously Mandy can tell the difference between having three and four friends over, but she treats them as ``the same.''  Insofar as we categorize things this way, we might expect to find violations of transitivity.  
+
+\marginnote{For arguments against our axioms as normative requirements, see \fullcite{temkin1996}}\marginnote{For a defense of our axioms, see \fullcite{binmore2003}} Beyond the descriptive question, it's less clear if this is normatively correct.  Some philosophers have argued just that, although many others are skeptical.
+
+\section{Beyond pairwise comparisons}
+\label{s:choice-functions}
+
+So far we have focused on making decisions as pairwise comparisons.  Is $x$ better, worse, or the same as $y$?  However, in many real world settings we are giving the choice between many different options all at once.  When you go to a restaurant, you usually see a menu with many options, not just two.
+
+A common initial reaction is to say, ``can't we just think about big choices as many pairwise choices?'' First, Mandy compares option \#1 on the menu to option \#2, and chooses her favorite.  Then the winner of that contest is paired against option \#3, etc.  Eventually Mandy reaches the end of the menu and whoever survives is the winner. Indeed that's how many economists think about it.  
+
+Of course, we don't {\it have} to think of it that way.  Forcing people to make decisions like this or assuming they do adds structure. It makes impossible patterns of choices called {\it menu dependence}, which we might want to at least entertain before dismissing them.  But to articulate what is menu dependence requires a slightly more general formalism.
+
+\subsection{Choice functions}
+
+To start we will suppose that there is a grand list of options $X$.  One might not always be confronted by all these options, instead this represents all the potential options Mandy might face.  Think of it like the list of all potential dishes that she might find on any menu of any restaurant.
+
+A given choice will present Mandy with a subset of $X$, $M \subset X$ that we will call a ``menu.''   The power set of $X$, denoted by $\mathscr{P}(X)$ is the set of all subsets of $X$, or for our purposes, the set of all potential menus.
+
+\nomenclature{$M$}{A menu. A set of choices that an agent might face.}
+\nomenclature{$\subset$}{Strict subset. $M \subset X$ is to be read as ``$M$ is a strict subset of $X$.'' This means that every member of $M$ is a member of $X$, but there is at least one member of $X$ that is not a member of $M$.}
+\nomenclature{$\subseteq$}{Weak subset. $M \subseteq X$ is to be read as ``$M$ is a subset of $X$.'' This means that every member of $M$ is a member of $X$.}
+\nomenclature{$\mathscr{P}(X)$}{The powerset of the set $X$, that is a set containing all subsets of $X$.}
+
+Mandy's job is to choose an option or set of options from that menu which she regards as acceptable.  To represent all of Mandy's choices in all potential situations, we will use a function $c$.  To start, we will impose very weak constraints on the function.  We make three assumptions about choice functions:
+\begin{enumerate}
+    \item $c: \mathscr{P}(X) \to \mathscr{P}(X)$
+    \item $c(M) \subseteq M$
+    \item $c(M) \ne \emptyset$
+\end{enumerate}
+The first condition, just says that $c$ is a function from menus to other menus.  The second means that $c(M)$ contains only options that are in $M$ (you can't choose something that is not on the menu).  And the last says that $c$ must choose {\it something} that's on the menu.
+
+\nomenclature{$c(\cdot)$}{A choice function. This takes as input a menu of options and outputs those options that the agent would choose from that set (potentially more than one).}
+\nomenclature{$\to$}{Defining a function. $c: X \to Y$ means a function $c$ which takes as input a member of the set $X$ and produces as output a single member of the set $Y$.}
+
+Sometimes people are tempted to allow $c(M) = \emptyset$ with the idea that Mandy might opt not to choose anything. If one isn't worried about being rude, one can go to a restaurant and order nothing at all.  This makes an important point about how $M$ is interpreted. $M$ is supposed to include {\it everything} Mandy could do.  If ordering nothing is an option, then $M$ must include an option to ``order nothing.''  That means that $c(M) \ne \emptyset$ is a more reasonable constraint, since there is a ``order nothing'' option in $M$ if that is a choice Mandy might make.  
+
+\nomenclature{$\emptyset$}{The empty set. That is, the set that contains no members.}
+
+$c(M)$ represents how Mandy would choose if given the menu $M$.  The one strange feature of how we've defined it is that $c(M)$ is a set, not a single option.  At a restaurant you usually order one thing, or if you order more than one you intend to get more than one dish.  That is not how we are reinterpreting $c(M)$, though.  $c(M)$ is those things that Mandy would not pay an arbitrarily small amount to remove.  Whatever is left are those that are ``tied for best'' for her.  To put it another way, she is indifferent between all options in $c(M)$.
+
+\subsection{Menu dependence}
+
+So far $c$ as a function is pretty unconstrained. It does require that when confronted with the same menu, Mandy gives same answer.  This is equivalent to assuming that Mandy's preferences stay stable over time.  Beyond that, there is little to force any kind of consistency across menus.  
+
+To illustrate how this might be a problem I always give a short little dialog.  Imagine that Mandy is in a restaurant listening to the specials from the waiter:
+
+\begin{dialogue}
+\speak{Waiter} Today we have two specials: mapo tofu and fish flavored chicken
+\speak{Mandy} If those are my options, I definitely prefer the fish flavored chicken.  Please bring me that!
+\speak{Waiter} Oh! I'm sorry, I just forgot. The chef added a third special at the last minute.  We also have strange flavor beef.  
+\speak{Mandy}  That changes everything!  Thank you for telling me. In that case, I would definitely prefer the mapo tofu.
+\end{dialogue}
+
+Most people reading this story think that something strange has gone on.  If Mandy wanted to order the fish flavored chicken when she thought the menu was $\{$chicken, tofu$\}$ then she indicated that she wanted fish flavored chicken more than mapo tofu. If the menu then expands, she might change her mind to order the new dish instead.  But she shouldn't go back and change her mind regarding the two dishes that were already available to her.
+
+\nomenclature{$\{\}$}{Used to denote a set of objects, $\{x,y,z\}$ is the set made up of elements $x, y,$ and $z$.}
+
+Notice also that Mandy's choices make it impossible for us to represent her with a preference relation $\succsim$.  Does she prefer mapo tofu over fish flavored chicken or vice versa (or is she indifferent)?  None of those options can account for her choices in our little dialog.
+
+The more general name for what Mandy did was ``menu dependence.''  Whether she preferred the tofu or the chicken depended on what menu was presented to her.  When the menu was $\{$chicken, tofu$\}$, she preferred the chicken to the tofu. When the menu was $\{$beef, chicken, tofu$\}$ she preferred the tofu to the chicken.
+
+\subsection{Sen's $\alpha$ and $\beta$}
+
+The story of Mandy in the restaurant shows that the choice functions and preferences are not, at base, the same formalism.  Although I haven't proven it formally, choice functions are strictly more general: someone who makes only pairwise choices can be represented with a choice function, but there are some choice functions (like Mandy's) that cannot be captured as a series of consistent pairwise choices.
+
+\nomenclature{$\alpha$}{Sen's principle $\alpha$. A principle that constrains choice functions}
+\nomenclature{$\beta$}{Sen's principle $\beta$. A principle that constrains choice functions}
+
+One might like to know what additional constraints we might add which would allow us to ``read off'' someone's preferences from their choice function and vice versa.  That is, what additional assumptions would we need to impose to make these two equivalent?
+
+There are a variety of different ways to axiomatize it, but the most clear is Amartya Sen's $\alpha$ and $\beta$ constraints.\marginnote{Sen himself discussed $\alpha$ and $\beta$ extensively in several papers collected in \fullcite{sen2004}}
+
+\begin{definition}
+({\bf Sen's $\alpha$}): Suppose that $x \in B$, $B \subseteq A$, and $x \in c(A)$, then $x \in c(B)$
+\end{definition}
+
+Mandy violated Sen's $\alpha$.  To see why, we can interpret the parts.  $x$ is the tofu.  $A$ is the larger menu $\{$beef, chicken, tofu$\}$.  $B$ is the smaller menu $\{$chicken, tofu$\}$.  The first conditions are satisfied.  $x \in B$, $B \subseteq A$, and $x \in c(A)$ since she ordered the tofu from the larger menu.  However, Mandy violated Sen's $\alpha$ because $x \notin c(B)$ since she ordered the chicken.
+
+Although Sen's $\alpha$ has gotten rid of our example of Mandy above, it is not sufficient to ensure that someone behaves as if they have a preference relation.  We haven't yet made sure that people don't do strange things with ties.  
+
+Suppose for example that Mandy's friend, Sean was with her and also heard the same menu.  Being a somewhat obnoxious restaurant goer, after hearing the first menu, Sean declared ``I don't care, bring me either one.''  However, upon learning of the presence of the beef dish, he changed his mind.  ``In that case, I'm not indifferent.  Bring me the chicken and definitely not the tofu.''  This is also inconsistent with thinking of Sean as having a preference relation. We need to exclude it as well.
+
+\begin{definition}
+({\bf Sen's $\beta$}): Suppose that $x, y \in c(B)$ and $B \subseteq A$, if $y \in c(A)$, then $x \in c(A)$
+\end{definition}
+
+These two conditions jointly entail that someone's choices will be consistent with them having a pairwise preference relation.  At the moment, that's stated a bit informally.  To make it more precise we need to say what it means to be ``consistent with'' a preference relation.
+
+First, suppose that we have a grand menu $X$ and a choice function $c$ defined over it.  We will start by defining a relation (what will eventually be our preference relation) by looking at all the choices from menus with only two options on them. 
+
+More precisely, let $R_c$ be defined as follows: for every $x, y \in X$, $x R_c y$ iff $x \in c(\{x,y\})$.  $x R_c y$ represents the relation ``$x$ would be among those chosen in a pairwise choice between $x$ and $y$.''
+
+\nomenclature{$R$}{An arbitrary relation. $x R y$ is to be read ``$x$ stands in relation $R$ to $y$. Sometimes written as $R_c$ for a relation defined in terms of a function $c$.}
+
+
+We should stop here for a moment and ask about the properties of $R_c$.  First off $R_c$ must be complete.  (Can you see why?) However, without making some assumptions about $c$ beyond it being a choice function, we cannot guarantee that $R_c$ is transitive. There is nothing in the definition of the choice function that prevents $R_c$ from having ``cycles'' where $x R_c y$, $y R_c z$, and $z R_c x$.
+
+Sen's $\alpha$ and $\beta$ are sufficient to prevent this.\marginnote{As an exercise see if you can prove this.}
+\begin{proposition}
+If $c$ obeys Sen's $\alpha$ and $\beta$ then $R_c$ (as defined above) is transitive.
+\end{proposition}
+
+Remember the question we started with: does Sen's $\alpha$ and $\beta$ guarantee that our agent's preferences behave {\it as if} they have a pairwise preference relation?  At this point we are part way there.  We have shown that every choice from a menu {\it that only contains two options} is consistent with a preference relation. But what about if there is a menu with more than two options?  We need to show consistency there too.
+
+To do this, we will complete the circle and use $R_c$ to define a choice function.  Define the function $d: \mathscr{P}(X) \to \mathscr{P}(X)$ in the following way:  For every $M \in \mathscr{P}(X)$, and $x \in M$, $x \in d(M)$ iff there is no $y \in M$ such that $y R_c x$ and not $x R_c y$.  Note: if $R_c$ is transitive, then we are guaranteed that $d$ satisfies the criteria of a choice function (do you see why?). 
+
+\nomenclature{$d$}{An arbitrary function.}
+
+What we've done is create the new choice function $d$ which is exactly what someone would chose if they started with the preference relation $R_c$ and then chose based on pairwise comparisons.
+
+So now, we want to show that $d$ and $c$ are the same.  This shows that {\it all} the choices in $c$ are equivalent to someone who had preference relation $R_c$ and chose according to it.  Graphically, this whole process is depicted in figure~\ref{f:sensalpha}.
+
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{ChoiceFunctionDiagram.png}
+\caption{A diagram of the construction process for proposition~\ref{p:sensalpha}.}
+\label{f:sensalpha}
+\end{marginfigure}
+
+\begin{proposition}
+\label{p:sensalpha}
+If $c(\cdot)$ obeys Sen's $\alpha$ and $\beta$ then $c(\cdot) = d(\cdot)$
+\end{proposition}
+\begin{proof}
+Suppose $M \in \mathscr{P}(X)$.  We need to prove two directions.  First that if $x \in c(M)$ then $x \in d(M)$ (we will call this ``$\Rightarrow$''). And, second, that if $x \in d(M)$ then $x \in c(M)$ (we will call this ``$\Leftarrow$'').
+    
+$\Rightarrow$: Suppose $x \in c(M)$ and suppose a $y \ne x$, $y \in M$ (if there is no $y$, this direction follows immediately). By Sen's $\alpha$, $x \in c(\{x, y\})$. So, therefore $x R_c y$. Since $y$ was arbitrary, we know that for all $y \in M$, $x R_c y$. This means that $x \in d(M)$
+
+   
+$\Leftarrow$: Suppose that $x \in d(M)$. Let $y \ne x$ and $y \in c(M)$. (If there is no such $y$ this direction follows immediately.) Since $x \in d(M)$ then we know that $x R_c y$ and therefore $x \in c(\{x,y\})$. Since $y \in c(M)$, $\{x,y\} \subseteq M$. By Sen's $\alpha$ $y \in c(\{x,y\})$. By Sen's $\beta$, $x \in c(M)$.
+\end{proof}
+
+Phew.  That was a lot of definitions, but at the end we've articulated something very important.  What does it mean to behave {\it as if} you are choosing according to a preference relation?  It means that you always obey Sen's $\alpha$ and $\beta$.
+
+That allows us to approach a question we asked a while ago from a different angle.  The original questions were (a) is choosing {\it as if} you have a preference relation a normative requirement and (b) is it descriptive accurate?  Now we can ask that same question but in terms of Sen's $\alpha$ and $\beta$.  Is it normatively reasonable to require someone to obey $\alpha$ and $\beta$?  Is it descriptively accurate?
+
+We will look at a few issues.
+
+\subsection{Learning from the menu}
+
+Sen himself didn't actually think his two conditions were either normative or descriptively accurate. He gave a series of examples that might present a problem, although the degree to which it does is controversial.
+
+For the first counter example let's return to the restaurant. Again suppose that we have a restaurant goer Mandy who has wandered into a random restaurant without really looking into it at all.  She is listening to the daily specials.  At first, she hears two options: escargot and Hawaiian pizza.  The waiter is called away for a second and Mandy thinks, ``I like escargot, but I'm not sure that I want it from a place that also would make Hawaiian pizza. While I don't really want pizza, I think that's a safer bet.''
+
+When the waiter returns, he provides several more options, all of which are traditional, high end French specialities.  Now, Mandy reconsiders. This must be a fancy French restaurant that is trying out a take on Hawaiian pizza. They probably do make good escargot, so she decides to order that.
+
+This is a violation of Sen's $\alpha$ because escargot is chosen from the large menu, but is not chosen from the smaller menu containing only escargot and Hawaiian pizza. Not only does it seem plausible that someone might do this, but it also seems quite reasonable which suggests that $\alpha$ is neither descriptively accurate nor normatively correct.
+
+Some people don't think this counts as a genuine objection, however. They point out that Mandy is learning something from the menu itself.  So, she's not really choosing (from her perspective) the same objects.  When she only knows about two dishes she thinks she's choosing between bad escargot and mediocre Hawaiian pizza.  In the larger menu she's choosing between good escargot and good pizza.  If we redescribe the situation where the escargot on the first menu is a different option than the escargot on the second menu, there is no violation of $\alpha$.
+
+This general strategy is quite common when dealing with potential counterexamples to various constraints on preferences.  At the extreme one might {\it always} redefine the options to be different options under each choice scenario.  Of course this is a way to respond, but it runs the risk of making $\alpha$ and $\beta$ toothless.  At the extreme, if every choice situation involves novel choices, there are no consistency requirements whatsoever. Everyone is always facing a completely new menu.
+
+\subsection{The role of social norms}
+
+\marginnote{Sen discusses this example in \fullcite{sen2004a}}Sen raises another series of examples about how social and moral norms might cause these kinds of violations.
+
+Imagine Mandy is now at a wedding where two types of fruit (mangoes and apples) are being served.  Mandy strongly prefers mangoes to apples, but Mandy also recognizes that there is a strong prohibition against taking the last of anything.  Mandy approaches the table with fruit and sees one mango and two apples.  We can imagine labeling these objects for convenience, let's call them $m_1$, $a_1$, and $a_2$.  In this setting, Mandy would opt to take one of the apples, since there is only one mango present. Stating this a little more formally, $c(\{m_1, a_1, a_2\}) = \{a_1, a_2\}$.
+
+Now suppose that the caterer comes and adds another mango (let's call it $m_2$).  With the additional mango, Mandy is no longer taking the last mango.  So now, she would take one of the two remaining mangoes.  Stated more formally $c(\{m_1, m_2, a_1, a_2\}) = \{m_1, m_2\}$.  This violates Sen's $\alpha$.
+
+The critical point here is that features of menu, combined with a social norm against taking the last of anything, creates a kind of dependence on the menu.  
+
+Of course, ``don't take the last mango'' is a social norm, but if that's the only time this comes up one might think it an oddity. Sen thinks such examples are more ubiquitous and might occur in the context of many moral constraints.  Space will prevent our discussion of this in full here, but you might think about whether any moral norms might lead to violations of Sen's $\alpha$ or $\beta$.
+
+\subsection{The decoy effect}
+
+Behavioral economics, the place where many of these axioms are tested on humans, has provided several purported examples of menu dependence in everyday people. Some are controversial. {\it The decoy effect} is perhaps the most clear example, and has apparently been used by marketers for decades (or centuries?).
+
+For an illustration, consider the following experiment.  Suppose that Mandy is given the opportunity to purchase a six-pack of beer. She knows only the price and the quality as judged by participants in a blind taste test.  She is first given the choice between the two options in table~\ref{t:decoy-two}.  Suppose that Mandy deicdes that she would prefer the cheaper beer, so she chooses option $x$.
+
+\begin{table}
+    \begin{tabular}{ccc}
+    \toprule
+     Option & Price & Quality (0 = worst, 100 = best) \\
+     \midrule
+     $x$    & \$18  & 50 \\
+     $y$    & \$26  & 70 \\
+     \bottomrule
+    \end{tabular}
+    \medskip
+    \label{t:decoy-two}
+    \caption{A two-choice menu}
+\end{table}
+
+Now suppose that instead, she had been given a different menu in table~\ref{t:decoy-three}.  It still includes options $x$ and $y$, but it includes a third option, $z$.  $z$ is obviously inferior because it is the same quality as $y$ but more expensive.  When this option is now on the list, Mandy chooses $y$ instead.  Now, $y$ seems like a good deal.
+
+\begin{table}
+    \begin{tabular}{ccc}
+    \toprule
+     Option & Price & Quality (0 = worst, 100 = best) \\
+     \midrule
+     $x$    & \$18  & 50 \\
+     $y$    & \$26  & 70 \\
+     $z$    & \$30  & 70 \\
+     \bottomrule
+    \end{tabular}
+    \medskip
+    \label{t:decoy-three}
+    \caption{A three-choice menu with a decoy}
+\end{table}
+
+\marginnote{For this experiment and similar ones see, \fullcite{Huber1982}}Experiments with these options or ones like them, suggest that people may violate Sen's $\alpha$. The addition of ``decoys'' can cause people to change their preferences on the items listed.
+
+There is a large literature documenting this effect, attempting to determine where it occurs, and trying to explain why it occurs. It's possible that it is an example of ``learning from the menu'' like the example of the wedding above, but I think it's fair to say that this is not fully settled yet.
+
+\subsection{Differing dimensions of value}
+
+In the previous section, we talked about incommensurability of objects. Sophie cannot choose between her two children, one might argue, because she simply does not have a dimension on which to compare them.  Difficult choices are made difficult, often, by the opposite problem: we have far too many dimensions on which they differ. 
+\marginnote{This example is a modified version of one first presented in \fullcite{Levi1990}}
+
+Let's consider a simple decision problem: where to go for dinner.  Suppose Mandy is deciding between three restaurants.  Al's Armenian, Bea's Bahamanian, and Charlie's Chechnyan; $a$, $b$, and $c$ for short.  Mandy cares most about the taste of the food and the quality of service.  Suppose she has decided that on the taste of the food $a \succ_F c \succ_F b$, and on the quality of service $b \succ_S c \succ_S a$.  (I'm using the subscripts here because these aren't Mandy's all-things-considered preferences, just her preferences according to a pre-specified dimension.)
+
+When she decides on a restaurant she first eliminates all the restaurants that aren't the best according to taste or quality of service.  If Mandy is left with only one restaurant, she goes there.  If she is left with more than one, however, then she will break the tie with a third criteria: the quality of the decor.  On decor, she ranks the restaurants $c \succ_D a \succ_D b$.
+
+This decision procedure will result in a set of decisions that violate Sen's $\alpha$.  Can you see why?
+
+\section{Transitivity, completeness, and utility}
+
+Why are we so concerned with transitivity and completeness to begin with?  One might just be interested in them for their own sake; to put some constraints on what it means to be rational. But often scholars are interested for another reason, that you have probably surmised: our ability to represent people with math.
+
+We've often motivated some of the constraints on $\succsim$ by appeal to the relation $\geq$ on numbers.  As a relation on numbers, $\geq$ is transitive and complete (among other things).  So, if someone violates transitivity or completeness we know we will have trouble representing them with numbers.  
+
+But if they obey transitivity and completeness, then we can represent their choices as choosing an outcome with a higher number.  Let's start by making this notion precise:
+
+\begin{definition}
+\label{d:util-representation}
+A utility function $u: X \to \mathbb{R}$ represents a preference relation $\succsim$ over $X$ when for every $x, y \in X$:
+\[ x \succsim y \text{ iff } u(x) \geq u(y) \]
+\end{definition}
+
+\nomenclature{$u(\cdot)$}{A utility function. This maps objects (of some kind) onto numbers in order to attempt to represent preferences.}
+\nomenclature{iff}{If and only if}
+\nomenclature{$\mathbb{R}$}{The Real Numbers. That is, any number (positive or negative) that can be written as a (potentially infinitely long) decimal number.}
+
+Now we can state a theorem that shows why transitivity and completeness are important properties:
+
+\begin{proposition}
+$\succsim$ obeys transitivity and completeness if and only if there is a utility function that represents it.
+\end{proposition}
+
+I will not prove this theorem here, but it should be clear how to do so given the basic structure of numbers.  
+
+A slightly more interesting question is, suppose we have such a representation, how unique is it?  That is, what parts of the representation can we take seriously?  If our representation says that $u(x) = \frac{1}{2} u(y)$, does that mean that Mandy likes $y$ twice as much as $x$?  The answer to this question is ``no'' because we could have chosen a different utility function that represented her equally well, but where the numbers were radically different.
+
+\begin{marginfigure}
+    \begin{centering}
+   {\bf Utility Function 1}\\
+    $u($Hawaii$) = 3$\\
+    $u($France$) = 2$\\
+    $u($Ohio$) = 1$\\
+    \end{centering}
+\vspace{10pt}
+    \begin{centering}
+    {\bf Utility Function 2}\\
+    
+    $u($Hawaii$)$ = 100\\
+    $u($France$)$ = 2\\
+    $u($Ohio$)$ = -10\\
+    \end{centering}
+    \vspace{10pt}
+    \label{f:twoutils}
+    \caption{Two utility functions which are both equally valid for Mandy}
+\end{marginfigure}
+
+To see an example, consider Mandy again, and suppose that she has a set of three outcomes that she is considering: $\{$vacation in Hawaii, vacation in France, vacation in Ohio$\}$.  Suppose that her preferences are transitive and complete, and that she prefers Hawaii $\succ$ France $\succ$ Ohio.  
+
+We can represent her with two different utility functions illustrated in figure~\ref{f:twoutils}. Or any of an infinite number of other utility functions. 
+
+So, while we can represent Mandy with numbers, we must be careful! Some features of those numbers are important (which number is bigger) but not others (their ratio, for example).  It does not make sense to say ``it's twice as hot today as yesterday'' because whether this statement is true depends on whether you are referring to the Celsius, Fahrenheit or Kelvin scales.  Similarly, it does not make sense to say of Mandy anything other than ``she likes Hawaii better than France.''
+
+This type of utility function has a name, an {\it ordinal utility function}.  This means that we can take the order of the number seriously, but we cannot take other mathematical properties seriously.  We can't subtract, multiply, or divide the numbers without doing something with the numbers that we aren't entitled to do.
+
+This may seem like a silly aside, but it's actually really important. Make sure you understand why we can't do this, because it will be a reoccurring theme in the chapters that follow.
+
+\section{Conclusion}
+
+This chapter focused on the theory of preference under certainty.  We introduced three different conceptual tools each with attendant axioms.  For $\succ$ and $\sim$, we had a list of nine (partially redundant) axioms.  For $\succsim$, we had two constraints. And for choice functions, we introduced Sen's $\alpha$ and $\beta$.
+
+Since there is a sense that all of these are equivalent, an objection to any one of them is an objection to all of them.  So if you are convinced that one or the other is not a good normative constraint or descriptive model, then you must abandon all of them in full generality.
+
+Of course, abandoning it as a model for all decisions doesn't make them completely useless.  As a normative matter, we might say these are normative constraints except in specific circumstances.  As an descriptive matter we might do the same. Alternatively, on the descriptive side we might opt to argue that the axioms are good enough for approximation.  If the violations are sufficiently rare, we might treat them the way astronomers treat friction, just ignore it.  Whether that works, of course, will depend on many particulars which we will not have time to get into.

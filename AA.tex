@@ -1,0 +1,527 @@
+% I think it might be nice to add to this chapter a brief discussion of the pragmatist motivation behind AA decision theories.  Maybe this should go in other places as well.
+
+% I have this strong intuition that there is a more intuitive way to prove the representation theorem that is more algorithmically minded.  Something like: prove that all the objective utility gambles work ala vnM.  Then prove that this representation gives you a unique probability for each state. Then generalize.
+
+\chapter{Anscombe\breakslash Aumann Decision Theory}
+\label{c:aa}
+
+In chapter~\ref{c:vnm}, we introduced a decision theory that did two things for us.  First, it articulated what it means for someone to {\it maximize expected utility} or at least to behave as-if they are. 
+
+The only downside of this theory is that all the probabilities were taken as {\it exogeneous}. That is, it involved gambles where the outcomes were objective and known probabilities.  There was no subjective judgments involved at all.  
+
+That might be fine for some idealized situations, like games in casinos where there is some well defined notion of objective probability. It seems reasonable to treat the probability of getting a 13 on the roulette wheel as a fixed quantity that everyone agrees on.  (Although even here, we might be worried.)
+
+But what about so many of our decisions where the probabilities are more subjective? When you decided whether or not to attend a particular college, you not only had to decide how much you cared about various things (your utilities) but you also had to estimate how likely some things where (your probabilities). For example, you might have weighed the benefits of a higher-ranked university against the benefit (or cost) of being close to home. Also, you had to guess at how likely it was that you would get various jobs with a particular degree.
+
+The decision theory we are going to discuss in this chapter is a first step in that direction.  It keeps around the ``objective chance'' lotteries from von Neumann and Morgenstern, but it also adds in some ``subjective'' events as well. 
+
+\section{The basic setup}
+
+In some sense everything we do now will be familiar, but it involves putting things together in new ways.  Unfortunately, more stuff means more notation.
+
+Like with almost everything we've done so far, we will start with a set of prizes or outcomes, $X$.  This is just like all the $X$'s we've had so far: they represent the final outcomes over which a utility function will be defined.  We'll assume that there are only finitely many things in $X$, but that's not necessary\dots it just makes our life easier.
+
+There are two fundamental parts to this system: the objective probability gambles and the subjective probability gambles. Objective probability gambles work just like they did in von Neumann\breakslash Morgenstern.  An objective probability gamble is a function over the prizes in $X$ such that \[\sum_{x \in X} g(x) = 1\]
+We will then let $Q$ be the set of all gambles over $X$. This looks just like it did in chapter~\ref{c:vnm} and intentionally so.
+
+Just like with von Neumann\breakslash Morgenstern, we assume that the agent knows all the probabilities for these gambles.   There is uncertainty over what prize they will get, but not uncertainty over what is the probability they will get some prize.
+
+Recall also in chapter~\ref{c:vnm} we introduced an ``addition'' operator, $\oplus$.  $\oplus$ allowed us to talk about ``compound gambles'' where Teddy might flip a coin and then pay Mandy in another gamble.  Like flipping a coin to decide which lottery ticket to buy, or something like that.
+
+What $\oplus$ does is allow us to talk about how we might add gambles together.  If we start with a number $p \in [0,1]$ and two gambles $g, h \in Q$, then $p g \oplus (1-p) h$ identifies another member of $Q$ that is the result of combining the two gambles prize by prize.  That is $p g \oplus (1-p) h = r \in Q$ such that for every $x \in X$, $r(x) = p g(x) + (1-p) h(x)$.
+
+So far this is just the von Neumann\breakslash Morgenstern setup we've already seen. Now we will introduce more stuff, the subjective probability gambles.  
+
+First, we will start with a set of states, $\Omega$.  Remember how we described $\Omega$ in chapter~\ref{c:probability}.  It's the same basic idea here: it is an exhaustive and mutually exclusive set of possible events.  Like before, it's critical that both of these criteria are met.  One {\it and only one} event in $\Omega$ will happen.
+
+Eventually, $\Omega$ will be the thing that people have a subjective probability distribution over. But, it will take a moment to get there.
+
+The next thing we'll introduce is the subjective probability gambles.  Subjective probability gambles are bets on events where there isn't a clear objective probability of winning.  So betting on who will win the world series, whether or not we'll find alien life, or what will be the value of the Dow Industrial Average are all ``subjective probability gambles.''
+
+We talked just a little about these in chapter~\ref{c:uncertainty-noprob}, when we introduced the normal form.  The idea was that we had states of the world, where someone might be uncertain, and in each state there was a prize. 
+
+For example, suppose Toby is deciding whether to bet on his beloved Collingwood Magpies winning the championship.  If he takes the bet and the Magpies win, Toby will win \$100.  But the ticket will cost him \$5 now.  So he's facing the normal form decision in figure~\ref{f:aa-examble-bet}.
+\begin{figure}[h!]
+\centering
+\begin{game}{2}{2}
+                        & {\it Magpies win} & {\it Magpies lose} \\
+Bet    & \$100                       & \$0 \\
+Don't bet        & \$5                          & \$5 \\
+\end{game}
+\medskip
+\caption{Toby considering a ``simple'' subjective probability bet on the Magpies}
+\label{f:aa-examble-bet}
+\end{figure}
+
+In this setting $\Omega$ is $\{$Magpies win, Magpies lose$\}$. The prize set $X = \{$\$100, \$5, \$0$\}$ The subjective probability gambles are {\it Bet} and {\it Don't bet}.  Each of them specifies what will happen in each state of the  world. 
+
+Said slightly more formally, {\it Bet} and {\it Don't bet} are both functions from $\Omega$ to $X$.  Put more abstractly, {\it Bet} is the function $b:\Omega \to X$ that looks like this:
+\begin{align*}
+b(\text{\it Magpies win}) & = \$100 \\
+b(\text{\it Magpies lose}) & = \$0 \\
+\end{align*}
+And {\it Don't bet} is the function $d:\Omega \to X$:
+\begin{align*}
+d(\text{\it Magpies win}) & = \$5 \\
+d(\text{\it Magpies lose}) & = \$5 \\
+\end{align*}
+
+With this extra bit of formalism in hand, we can now talk about any arbitrary ``simple'' subjective probability gamble. It's just a function from $\Omega$ to $X$.  The set of all these functions is denoted by $H_S$, where $S$ stands for ``simple.''
+
+\nomenclature{$H_S$}{The set of all ``simple'' subjective probability gambles in Anscombe\breakslash Aumann decision theory. These are all the functions from $\Omega \to X$.}
+
+Why are these ``simple?''  Because for each event the payoff is a sure-thing prize.  Toby either wins some amount of money or not, but that's it.  We might imagine more complex subjective probability gambles where Toby gets paid off in terms of other gambles. For example, suppose that someone offers Toby this gamble: would you prefer to get a lottery ticket if the Magpies win or instead \$1 for sure? The lottery ticket, let's suppose, is an objective probability gamble ala von Neumann\breakslash Morgenstern.  Perhaps it's the gamble that pays \$100 if a fair coin lands heads and \$0 otherwise.  This normal form decision looks like figure~\ref{f:aa-complex-example}.
+\begin{figure}[h!]
+\centering
+\renewcommand{\gamestretch}{2}
+\begin{game}{2}{2}
+                        & {\it Magipies win} & {\it Magpies lose} \\
+Bet    & $\frac{1}{2} \$100 \oplus \frac{1}{2} \$0$               & \$0 \\
+Don't bet        & \$1                          & \$1 \\
+\end{game}
+\renewcommand{\gamestretch}{1}
+\medskip
+\caption{Toby considering a ``complex'' subjective probability bet on the Magpies}
+\label{f:aa-complex-example}
+\end{figure}
+
+Now we're in a position to describe all the possible subjective probability gambles, they are all the functions from $\Omega$ to $Q$. Let's call this set be $H$.
+
+\nomenclature{$H$}{The set of all complex gambles in Anscombe\breakslash Aumann decision theory. This is a function from $\Omega \to Q$. It includes $H_S$}
+
+$H$ has a lot of stuff in it. First and foremost, $H$ has a set of ``gambles'' that give exactly the same certain prize in every state. {\it Don't bet} is one example, it gives \$1 (a prize in $X$) regardless of the state.  If we restrict ourselves just to these gambles, we can talk about Mandy's preference over the prizes in $X$.
+
+Similarly, $H$ also includes gambles that give the same objective probability gamble in every state.  That is $H$ gives the same element of $Q$ in every state.  For example, you might imagine that instead of giving Mandy \$1 for sure, the {\it Don't bet} option gave Mandy a 50:50 chance of \$2 or nothing.  By including these, we can now talk about Mandy's preferences over the members of $Q$ just as we did in von Neumann\breakslash Morgenstern.
+
+$H$ also includes all the ``simple'' gambles, $H_S$ where Mandy gets different sure-thing prizes in each state.  And finally, $H$ includes complex gambles that give all sorts of things.  All these are illustrated in figure~\ref{f:aa-gambles-examples} for $X = \{\$0, \$1, \$5\}$
+
+\begin{figure}[h!]
+\centering
+\renewcommand{\gamestretch}{2}
+\begin{game}{4}{3}
+                & $s_1$ & $s_2$  & $s_3$ \\
+Sure thing $X$  & \$1 & \$1 & \$1 \\
+Sure thing $Q$  & $\frac{1}{2} \$5 \oplus \frac{1}{2} \$0$ & $\frac{1}{2} \$5 \oplus \frac{1}{2} \$0$ & $\frac{1}{2} \$5 \oplus \frac{1}{2} \$0$ \\
+Simple gamble   & \$1 & \$5 & \$0 \\
+Complex gamble  & $\frac{1}{3} \$1 \oplus \frac{2}{3} \$0$ & \$5 & $\frac{4}{5} \$5 \oplus \frac{1}{5} \$1$ \\
+\end{game}
+\renewcommand{\gamestretch}{1}
+\medskip
+\caption{Many different types of gambles in $H$}
+\label{f:aa-gambles-examples}
+\end{figure}
+
+As you can see, $H$ has a lot of stuff in it.  It has all sorts of gambles from the relatively commonplace to the very bizarre.  To look ahead for just a moment, we are going to imagine that Mandy has a preference relation over $H$.  We are going to ask under what conditions Mandy preferences are consistent with her having a probability function over $\Omega$, a utility function over $X$, and choosing by maximizing subjective expected utility.  That's a lot for Mandy to do, but it turns out that there are only five axioms (and three of them will be familiar).
+
+An important thing to note here is that an element $h \in H$ is a kind of double function.  First, $h: \Omega \to Q$.  So, $h(s)$ for some state $s$ tells you what objective probability gamble you will get if state $s$ happens.  Remember, that elements of $Q$ are, themselves, functions.  $f \in Q$ is a function $f: X \to [0,1]$, so that $f(x)$ tells you the probability that you will get prize $x$.   So, $h(s)(x)$ tells you, if state $s$ happens what is the probability that you will get prize $x$.  To cut down on the notation just a little bit, we will abbreviate $h(s)(x)$ as $h_s(x)$.
+
+\nomenclature{$h_s(x)$}{Also can be written $h(s)(x)$. For a given subjective probability gamble $h$ in Anscome/Aumann decision theory, this is the probability that you will get object $x$ if you are in state $s$.}
+
+As if this wasn't enough, we need one more thing.  Just like with von Neumann\breakslash Morgenstern, we would like to have a way to talk about compound subjective probability gambles. What if I flip a coin to decide which subjective probability gamble you will get?  So, now we need to extend our combination operator, $\oplus$ to include gambles in $H$.
+
+It will work much the same as before.  For any number $p \in [0,1]$ and any two subjective probability gambles $g, h \in H$, we will define $p g \oplus (1-p) h$:
+\begin{definition}
+For all $p \in [0,1]$ and $g, h \in H$, $p g \oplus (1-p) h = r \in H$ such that for all $s \in \Omega$, $r(s) = p g(s) \oplus (1-p) h(s)$.
+\end{definition}
+
+Phew.  This is a lot. But it now allows us to do basically anything we want with gambles.  I can flip a coin to decide which of two subjective bets I'll give you, and those subjective bets can themselves pay off in other objective probability lottery tickets that involve more flips of coins.  
+
+If this seems needless involved and complex to you, you're not alone.  Eventually, it will become clear to you why we need all this stuff.  To give you a quick sense: we're going to use the objective probability gambles as a kind of comparison so we can figure out what the subjective probabilities are.  If this still seems mysterious to you, that's okay. Hopefully it will become clear with time.
+
+\section{Axioms}
+
+\marginnote{We're getting a lot of notation. Here's a quick primer in case you forget.\\
+~\\
+$X$: Prizes\\
+$Q$: Objective gambles\\
+$\Omega$: Set of states\\
+$H$: Subjective gambles\\
+$\succsim$: Mandy's preferences over $H$}
+
+Okay, now that we've got the choice set in hand, we can start talking about axioms. We'll assume that Mandy has a relation $\succsim$ defined over $H$, the set of all complex and simple subjective probability gambles.
+
+The first three axioms will be completely familiar, because they have just been lifted whole cloth from von Neumann\breakslash Morgenstern. 
+
+\begin{definition}[Axiom 1]
+$\succsim$ is complete and transitive defined over $H$
+\end{definition}
+
+I won't belabor this axiom here, we've discussed it in chapters~\ref{c:certainty} and~\ref{c:vnm}.  
+
+\begin{definition}[Axiom 2, Independence]
+For all $g, h, i \in H$ and all $p \in (0,1]$, if $g \succ h$ then $p g \oplus (1-p) i \succ p h \oplus (1-p) i$
+\end{definition}
+
+\begin{definition}[Axiom 3, Continuity]
+For all $g, h, i \in H$, if $g \succ h \succ i$ then there exists $p, q \in (0,1)$, where $p g \oplus (1-p) i \succ h \succ q g \oplus (1-q) i$
+\end{definition}
+
+These two axioms are lifted exactly from von Neumann\breakslash Morgenstern with the only difference being what they are defined over.  Instead of restricting the definition to the set of objective probability gambles $Q$, it's inclusive of all subjective probability gambles as well $H$. 
+
+We actually could stop here.  What would we get if we did?  Well, we'd get\dots something.  We could represent our agent with a kind of utility function (of a sort), but it wouldn't be defined over the prizes in $X$ and we wouldn't have anything like a notion of probability over $\Omega$.  So, we need more axioms!
+
+The first axiom is actually very simple, and doesn't really require very much discussion.
+\begin{definition}[Axiom 4, Non-triviality]
+There exists and $h, g \in H$ such that $h \succ g$
+\end{definition}
+This axiom merely requires that Mandy is not indifferent between absolutely everything.  Of course, one might be completely indifferent, but in such a case there really isn't much that we want to say.  So, rather than interpreting this as a normative requirement, most people think of it as specifying the topic.  Rational choice theory just isn't about people who are completely indifferent.
+
+Before we get to the last axiom, we'll need to introduce a bit of terminology and formalism.  The intuitive idea here is that there might be some states that the agent assigns probability zero. Technically speaking we can't say that yet, since we don't have a probability function. So we have to get a little creative.  How could we get at that idea without appealing to probability?
+
+Think about how you would react if there was a state that you thought was impossible.  You wouldn't much care what prize you got in that state because it would never come about.  Say you think it's absolutely impossible for a dice to land on the corner and just stay there, then you won't care whether I pay you \$5 or \$100 in that state since it will never happen. That is the motivation behind calling a state {\it null}. 
+
+This is how we define it formally.
+\begin{definition}
+A state $s \in \Omega$ is considered null if $g \sim h$ for all $g$ and $h$ such that for all $s^\prime \ne s$, $g(s^\prime) = h(s^\prime)$.
+\end{definition}
+The basic idea: take any two arbitrary subjective probability gambles that differ only on state $s$ but agree everywhere else.  If the agent is always indifferent between these two, regardless of what they pay on $s$, then we take $s$ to be {\it null}.  The agent simply doesn't care about what happens at $s$.
+
+We aren't requiring that any state be a null state, agents don't have to have them. We are {\it allowing} there to be null states, agents {\it can} have them. If an agent has one, we need to be able to detect it because it will matter to our last axiom.
+
+The last axiom does {\it a lot} of work, and is legitimately controversial.  The goal of the axiom is to insist that how much you like a prize in $X$ doesn't depend on the state.  It allows us to make cross state comparisons, which is the only way we can get probability.  
+
+To state this axiom we will need to introduce a little notation.  Let $h \in H$ be a subjective probability gamble, $i \in Q$ be an objective probability gamble, and $E \subseteq \Omega$ be a set of states (also called an event).  We will define $h \leftarrowtail_E i$ as the act which gives $h$ in states not in $E$ and $i$ in states in $E$.  Stated more formally:
+\begin{equation*}
+h \leftarrowtail_E i = \begin{cases}
+    h(s), & \text{if } s \notin E \\
+    i,   & \text{if } s \in E
+\end{cases}
+\end{equation*}
+
+\nomenclature{$\leftarrowtail_E$}{A replacement operation for Anscombe\breakslash Aumann decision theory. $h \leftarrowtail_E g$ takes $h$ and replaces what it gives in the states in $E$ with what $g$ gives in $E$.}
+This operation $\leftarrowtail$ allows us to take a ``base'' gamble $h$ and modify it in one state (or one set of states) by replacing what $h$ would normally give you with another gamble $i$. 
+
+In it's simplest form, we might just replace one gamble with a prize.  To get a sense for how this operation works, a few examples are illustrated in~\ref{f:aa-arrow-operator}.  Here, take $i = \frac{1}{3} \$2 \oplus \frac{2}{3} \$0$.
+
+\begin{figure}[h!]
+\centering
+\renewcommand{\gamestretch}{2}
+\begin{game}{4}{3}
+                & $s_1$ & $s_2$  & $s_3$ \\
+$h$  & \$1 & \$2 & \$3 \\
+$h \leftarrowtail_{s_2} \$5$  & \$1 & \$5 & \$3 \\
+$h \leftarrowtail_{s_3} i$  & \$1 & \$2 &  $\frac{1}{3} \$2 \oplus \frac{2}{3} \$0$ \\
+$h \leftarrowtail_{\{s_1,s_2\}} i$ & $\frac{1}{3} \$2 \oplus \frac{2}{3} \$0$ & $\frac{1}{3} \$2 \oplus \frac{2}{3} \$0$ & \$3
+\end{game}
+\renewcommand{\gamestretch}{1}
+\medskip
+\caption{Illustration of the operator $\leftarrowtail$}
+\label{f:aa-arrow-operator}
+\end{figure}
+
+With that operator, we're now in a position to introduce the axiom.
+
+\begin{definition}[Axiom 5, State Independence]
+Let $h \in H$, $s \in \Omega$ and $g, i \in Q$ be such that:
+\begin{equation*}
+    h \leftarrowtail_s g \succ h \leftarrowtail_s i
+\end{equation*}
+Then for all non-null $s^\prime \in \Omega$
+\begin{equation*}
+    h \leftarrowtail_{s^\prime} g \succ h \leftarrowtail_{s^\prime} i  
+\end{equation*}
+\end{definition}
+
+The basic idea isn't that hard.  We want to know whether you prefer $g$ or $i$ in state $s$. The way we figure this out is by taking some act (any act really) and modify it to either give you $g$ or $i$ in state $s$ (but leave the act the same everywhere else). We ask you to compare the two modified acts.  If you prefer the modification with $g$ to the modification with $i$ in state $s$, then we can say that you like $g$ more than $i$ in state $s$.  What the axiom requires is that if you like $g$ more than $i$ in state $s$, then you like $g$ more than $i$ in {\it all} states that are non-null.
+
+It's not hard to give examples where this is isn't true.  Suppose, as is reasonable, that I like having an umbrella {\it when it rains} to not having an umbrella when it rains.  So, if we make $g = $``Have an umbrella'', $i = $``Don't have an umbrella'', and $s = $``It is raining'', then I will obey the first part of that axiom, I will prefer $h$ modified to give me an umbrella in state $s$ to $h$ modified to not give me an umbrella in state $s$. 
+
+But, if we modify $h$ in a different state, say the state where it is warm and sunny, I will not prefer the modification to give me $g$ {\it in that state}.  What good is an umbrella when it's warm and sunny?  
+
+If the axiom is so obviously false, why do people bother with it?  Well, there are two responses. First, without it we are in trouble when it comes to our aim.  There are a few complicated ways around it that get us half way there. But if we want a simple utility and probability function to come out of it, we basically don't have a choice but to assume this axiom.
+
+Defenders of this axiom say we should view this more of a constraint on how $X$ is described than on the agent herself. We shouldn't include things like ``umbrella'' in our $X$ since that is state-dependent.  Instead, what we should do is describe the outcomes in ways that are clearly state independent.  If instead of letting $X = \{$Have umbrella, don't have umbrella$\}$, we could redescribe it as $X = \{$Be wet and cold, be warm and dry$\}$.  This is more plausibly state independent. So rather than being an axiom entirely about the agent, the axiom is thought to be a combination of constraints on the agent and also on the person who is modeling the agent. 
+
+Even interpreted this way, there is controversy. There are two remaining concerns. First, can you always do that?  Certainly the value of the outcome ``stay dry'' is more state independent than ``have an umbrella.'' But it's not entirely state independent either. How valuable it is to stay dry depends on whether I'm at the beach or in a water park or \dots.  So, there is some philosophical dispute about whether there are truly state-independent outcomes.
+
+Second is more empirically minded.  Even if we can guarantee that there are such things, we may not know which things they are. If an experimenter puts a subject through some choices and finds that they violate this axiom, what should they do? Perhaps the subject just violates the axioms. Or perhaps the experimenter has chosen the wrong $X$. It seems possible to always assume the latter, so maybe the axiom isn't even testable at all.
+
+I won't belabor this discussion here, and I'll leave it to you to make up your own mind about the importance of these concerns.
+
+
+\section{Representation theorems}
+
+Since we now have more stuff, in particular the set of states in $\Omega$, we need a new concept of representation.  Now a representation not only needs a utility function, but also needs a probability function.  
+
+\begin{definition}
+A utility function $u: X \to \mathbb{R}$ and a probability function $P: \Omega \to [0,1]$ (together) represent a relation $\succsim$ over $H$ in case for every $g, h \in H$:
+\begin{equation*}
+g \succsim h \text{ iff } \sum_{s \in \Omega} P(s) \big( \sum_{x \in X} g_s(x) u(x)\big) > \sum_{s \in \Omega} P(s) \big( \sum_{x \in X} h_s(x) u(x)\big)
+\end{equation*}
+\end{definition}
+
+This is quite a mouthful, so let me rewrite it in words.  In order to represent a relation $\succsim$ over $H$, we must find {\it both} a utility function over the prizes ($X$) and a probability function over the states ($\Omega$) such that the agent behaves as if they maximize expected utility with respect to those two functions.
+
+What the term $\sum_{s \in \Omega} P(s) \big( \sum_{x \in X} h_s(x) u(x)\big)$ represents is the expected utility of subjective probability gamble $h$ with respect to the probability function $P$. The first summation is over the various states, where each is weighted by it's probability $P(s)$.  The internal sum is over the objective probability gambles. $h_s(x)$ represents the probability that in state $s$, the resulting gamble will produce prize $x$.  And, of course, $u(x)$ is the utility of $x$.
+
+With all that in hand, we can state the first representation theorem of Anscombe\breakslash Aumann. It looks basically the same as the one for von Neummann\breakslash Morgenstern except that now we have more axioms and we have a pair of functions instead of just one.
+
+Before we prove this theorem, we will first actually prove something weaker.  We will start with just axioms 1-3 and show that we can evaluate each subjective probability gamble with a state-by-state function.  Intuitively that function incorporates both the probability of the state and also something like a utility, although the utilities {\it across} states don't have to coincide with one another in any strong way. The function represents a kind of odd hybrid.
+
+\begin{proposition}
+\label{p:aa-state-dependent}
+    $\succsim$ obeys axioms 1-3 if and only if there exists a set of functions $f_s$ (one for each $s \in \Omega$) such that:
+    \begin{equation*}
+    g \succ h \text{ iff } \sum_{s \in \Omega} \sum_{x \in X} f_s(x) g_s(x) > \sum_{s \in \Omega} \sum_{x \in X} f_s(x) h_s(x)
+    \end{equation*}
+\end{proposition}
+
+For this proof, we will only prove the hard direction that is the claim that if $\succsim$ obeys axioms 1-3 then the relevant functions exist. 
+
+\begin{proof}
+First, note that Axioms 1-3 are simply the von Neumann\breakslash Morgenstern axioms. As a result we can define $F$ just as we did in that proof, and it obeys the same three properties:
+\begin{enumerate}
+    \item $F$ is well defined.
+    \item $F(g) \geq F(h)$ iff $g \succsim h$.  
+    \item $F(pg \oplus (1-p)h) = pF(g) + (1-p)F(h)$ ($F$ is affine).
+\end{enumerate} 
+
+What we will now prove is that $F$ has the form that is relevant to the theorem, namely that we can find a set of $f_s$ such that for all $g \in Q$:
+\begin{equation*}
+    F(g) = \sum_{s \in \Omega} \sum_{x \in X} f_s(x) g_s(x)
+\end{equation*}
+
+In order to do this, we will choose arbitrary $g \in H$ and $h \in H$.  Now we will construct a series of modified versions of $g$ by replacing the outcome in one state of $g$ with the outcome from the corresponding state in $h$. 
+
+So, 
+\begin{align*}
+    g^1 &= g \leftarrowtail_{s_1} h \\
+    g^2 &= g \leftarrowtail_{s_2} h\\
+    g^3 &= g \leftarrowtail_{s_3} h\\
+        & \vdots \\
+    g^n &= g \leftarrowtail_{s_n} h\\
+\end{align*}
+Now consider the mixture of all of these $g^i$'s.  That is:
+\begin{equation*}
+    g^* = \frac{1}{n} g^1 \oplus \frac{1}{n} g^2 \oplus \frac{1}{n} g^3 \oplus \dots \oplus \frac{1}{n} g^n
+\end{equation*}
+Because of the affineness of $F$
+\begin{equation*}
+F(g^*) = \frac{1}{n} \sum_{s \in \Omega} F(g^s)
+\end{equation*}
+Note that,
+\begin{equation*}
+    g^* = \frac{1}{n} h \oplus \frac{n-1}{n} g
+\end{equation*}
+So, combing these, we get:
+\begin{equation}
+\label{e:aa-F-def}
+\frac{1}{n} F(h) + \frac{n-1}{n} F(g) = \frac{1}{n} \sum_{s \in \Omega} F(g^s)
+\end{equation}
+
+We are now going to define a set of functions, one for each state $s \in \Omega$, $F_s: Q \to \mathbb{R}$.  (This is not quite what we need yet, because we need $f_s$ to be a function from $X \to \mathbb{R}$, but this is getting closer.)  For any $i \in Q$
+\begin{equation*}
+F_s(i) = F(g \leftarrowtail_s i ) - \frac{n-1}{n} F(g)
+\end{equation*}
+So, for any $h_s$ this says,
+\begin{equation*}
+F_s(h_s) = F(g^s) - \frac{n-1}{n} F(g)
+\end{equation*}
+If we sum all these over the $s$'s and multiply by $1/n$:
+\begin{equation*}
+\frac{1}{n} \sum_{s \in \Omega} F_s(h_s) = \frac{1}{n} \sum_{s \in \Omega} F(g^s) - \frac{n-1}{n} F(g)
+\end{equation*}
+Notice that we can rewrite equation~\ref{e:aa-F-def} as,
+\begin{equation*}
+    \frac{1}{n} F(h) = \frac{1}{n} \sum_{s \in \Omega} F(g^s) - \frac{n-1}{n} F(g) 
+\end{equation*}
+Combining these two and multiplying by $n$ we have,
+\begin{equation}
+    \label{e:aa-Fs}
+     F(h) = \sum_{s \in \Omega} F_s(h_s)
+\end{equation}
+
+Recall that $h_s \in Q$, it's an objective probability gamble. So now we just need to show that there exists an $f_s: X \to \mathbb{R}$ such that $F_s(h_s) = \sum_{x\in X} f_s(x)h_s(x)$.
+
+To do that, let $f_s(x) = F_s(d_x)$ where $d_x \in Q$ is the gamble that gives $x$ with probability 1.  Now, we just have to show that for arbitrary gambles, $h_s$
+\begin{equation}
+    \label{e:aa-Fsfs}
+    F_s(h_s) = \sum_{x\in X} f_s(x)h_s(x) 
+\end{equation}
+This  follows from the same inductive argument given in the proof of the von Neumann\breakslash Morgenstern representation theorem.
+
+Combining equations~\ref{e:aa-Fs} and $\ref{e:aa-Fsfs}$ with the second property of $F$ above, we now have the required result:
+ \begin{equation*}
+    g \succ h \text{ iff } \sum_{s \in \Omega} \sum_{x \in X} f_s(x) g(s)(x) > \sum_{s \in \Omega} \sum_{x \in X} f_s(x) h(s)(x)
+\end{equation*}
+\end{proof}
+
+Why is this proposition interesting? Well, it shows that with only the von Neumann\breakslash Morgenstern axioms we get something that is related to a utility function, but not quite.  Within each individual state $f_s$ looks like a utility function, but the $f_s$ differ across states. Some of that is because the agent might think some states are more likely than others, and this gets incorporated into the $f_s$, but we have no guarantee that's the only thing going on.  The utilities might also be state-dependent in the way we described before.
+
+One important implication of this proposition is that the first three axioms {\it have} eliminated the problem of act--state dependence that we first discussed in chapter~\ref{c:uncertainty-noprob}.  That is, the agent cannot think that their action influences the probability of a state.  This is somewhat surprising because none of the three von Neumann\breakslash Morgenstern axioms mention states at all. But, somehow, they have eliminated that possibility. You might try to figure out how this possibility was eliminated by the von Neumann\breakslash Morgenstern axioms.
+
+Adding the last two axioms gives us the stronger representation theorem.
+
+\begin{proposition}[First representation theorem]
+    $\succsim$ obeys axioms 1-5 if and only if there exists a utility function and probability function pair that represents it.
+\end{proposition}
+
+\begin{proof}
+Starting with proposition~\ref{p:aa-state-dependent}, we know that there exists a collection of $f_s$ (one for each $s \in \Omega$) such that:
+\begin{equation*}
+    g \succ h \text{ iff } \sum_{s \in \Omega} \sum_{x \in X} f_s(x) g(s)(x) > \sum_{s \in \Omega} \sum_{x \in X} f_s(x) h(s)(x)
+\end{equation*}
+We will start with one of those sets. 
+
+Let $i, j \in Q$ be arbitrary objective probability gambles. And let $h \in H$ be an arbitrary subjective probability gamble. It follows from axiom 4 (non-triviality) that there must be at least one non-null state, $s$. 
+
+By proposition~\ref{p:aa-state-dependent},
+\begin{equation*}
+\sum_{x \in X} f_s(x)i(x) > \sum_{x \in X} f_s(x)j(x) 
+\end{equation*}
+occurs if and only if
+\begin{equation*}
+h \leftarrowtail_s i \succ h \leftarrowtail_s j
+\end{equation*}
+which, by axiom 5, occurs if and only if, for any non-null $s'$
+\begin{equation*}
+h \leftarrowtail_{s^\prime} i \succ h \leftarrowtail_{s^\prime} j
+\end{equation*}
+which, by proposition~\ref{p:aa-state-dependent} occurs if and only if
+\begin{equation*}
+\sum_{x \in X} f_{s^\prime}(x)i(x) > \sum_{x \in X} f_{s^\prime}(x)j(x) 
+\end{equation*}
+
+Putting all this together we have for arbitrary $i, j \in Q$ and arbitrary non-null states $s$ and $s^\prime$,
+\begin{equation*}
+\sum_{x \in X} f_s(x)i(x) > \sum_{x \in X} f_s(x)j(x) \text{ iff }\sum_{x \in X} f_{s^\prime}(x)i(x) > \sum_{x \in X} f_{s^\prime}(x)j(x) 
+\end{equation*}
+
+We will start by choosing one particular non-null state $s^*$ as a kind of ``anchor.'' By the second representation theorem for von Neumann\breakslash Morgenstern (proposition~\ref{p:vn-rep-2}), we know that any arbitrary $f_s$ must be related to $f_{s^*}$ must be related in the following way.  There exist two numbers $a_{s} > 0$ and $b_{s}$ such that, 
+\begin{equation*}
+f_{s} = a_s f_{s^*} + b_s
+\end{equation*}
+(For simplicity, we will also define $a_{s^*} = 1$ and $b_{s^*} = 0$
+
+Now we can rewrite the representation from proposition~\ref{p:aa-state-dependent} as:
+\begin{multline*}
+    g \succ h \text{ iff } \\ \sum_{s \in \Omega} \sum_{x \in X} (a_s f_{s^*}(x) + b_s) g(s)(x) > \sum_{s \in \Omega} \sum_{x \in X} (a_s f_{s^*}(x) + b_s)h(s)(x)
+\end{multline*}
+
+If we let $c = \sum_s a_s$, we can now define $P(s) = a_s / c$. With a little algebra we can show that: 
+\begin{multline*}
+    \sum_{s \in \Omega} \sum_{x \in X} (a_s f_{s^*}(x) + b_s) g(s)(x) > \sum_{s \in \Omega} \sum_{x \in X} (a_s f_{s^*}(x) + b_s)h(s)(x) \\ \text{ iff } \\
+    \sum_{s \in \Omega} P(s) \big (\sum_{x \in X}  f_{s^*}(x) g(s)(x)\big) > \sum_{s \in \Omega} P(s) \big( \sum_{x \in X} f_{s^*}(x) h(s)(x) \big)
+\end{multline*}
+So, now $P(s)$ is our probability function and $f_{s^*}$ is our utility function which represent $\succsim$.
+\end{proof}
+
+\section{The Ellsberg Paradox}
+
+\marginnote{\fullcite{knight1921}}The economist Frank Knight is famous for insisting on a (controversial) distinction between what he called ``risk'' and ``uncertainty.'' Risk, for Knight, is something like the objective probability gambles of von Neumann\breakslash 
+Morgenstern.  You are subject to risk because you don't know ahead of time what outcome you will get.  But you face no ``uncertainty'' in his terminology because you know what the probabilities are.  
+
+Gambles at casinos are classic examples for a reason.  Casinos are very careful to balance their roulette wheels and train their croupiers to ensure that each individual slot on the roulette wheel has as close to an equal chance as possible. So, when deciding what number to bet on, or whether to bet at all, an agent faces a choice under risk: they don't know whether they will win, but they know the probabilities.
+
+There are other decisions where things are squishier.  SETI (Search for Extra Terrestrial Intelligence) project is a type of gamble.  It costs money, and if there are no alien species that we can detect, that money will be mostly wasted.  On the other hand, if there are such species, it would be a resounding success.  So, the value of this gamble turns on the probability that there is an alien species that we can detect.  We don't really know what that probability is, so here we face a decision under ``uncertainty.'' The subjective probability gambles of Anscombe\breakslash Aumann are (potentially) gambles of this type.
+
+Some scholars think this is a distinction without a difference.  We are always uncertain, sometimes we are more confident in our probability judgments than others, but in the end we do (or should) assign a subjective probability to everything and act accordingly. This is essentially the claim of the Anscombe\breakslash Aumann theory.  The representation theorem we just discussed proves that if you obey the axioms you behave as if you treat both the same.
+
+\marginnote{Ellsberg first discussed his paradox in \fullcite{Ellsberg1954}}Daniel Ellsberg, before he became famous as either a traitor or a hero depending on who you ask, proposed a paradox that puts some pressure on this way of thinking.  Here I'll give you my favorite version: Ellsberg's ``one urn'' paradox.
+
+Suppose that Teddy brings to Mandy a urn filled with a bunch of colored balls.  Teddy tells Mandy that there are (potentially) three different colors of balls in the urn: red, black, and yellow.  He tells her that there are 300 balls in the urn, and that exactly 100 of them are red. But he will not tell her how many of the remaining 200 balls are black or yellow. All she knows is that those are the only two possible colors.  (Let's suppose that Teddy never lies about such things.)
+
+Like with Allais paradox, we will consider two different choice situations.  In Choice 1, Mandy can choose between Gamble $g_1$ that will pay her \$100 if she draws a red ball and nothing otherwise and Gamble $g_2$ that will pay her \$100 if she draws a black ball and nothing otherwise.  Take a second and think about which one you would choose.
+
+In Choice 2, Mandy is offered a different choice. Gamble $g_3$ will pay her \$100 if she gets either a red or yellow ball.  Gamble $g_4$ will pay her \$100 if she gets either a black or yellow ball.  Take a second to think about what you would choose in this situation, too.
+
+We can represent all these gambles in the normal form.
+
+\begin{figure}[h!]
+\centering
+\begin{game}{4}{3}
+     & Red ball & Black ball & Yellow ball \\
+$g_1$  & \$100    & \$0        & \$0 \\
+$g_2$  & \$0      & \$100      & \$0 \\
+$g_3$  & \$100    & \$0        & \$100 \\
+$g_4$  & \$0      & \$100      & \$100 
+\end{game}
+\caption{The normal form representation of the Ellsberg paradox}
+\label{f:ellsberg}
+\end{figure}
+
+Most (but not all) people prefer Gamble $g_1 \succ g_2$ and $g_4 \succ g_3$. Let's assume Mandy is like most people. This is often described as a preference for known probabilities.  Gamble $g_1$ gives Mandy a known 1/3 probability of winning \$100.  Whereas Gamble $g_2$ could be anything from 2/3 (if all the remaining balls are black) or 0 (if all the remaining balls are yellow).  Conversely, $g_4$ gives her a known 2/3 probability of getting \$100, and $g_3$ gives her anywhere from 1/3 to 1. 
+
+If you remember our discussion of the Allais paradox from chapter~\ref{c:vnm}, you might already start to notice the problem here.  
+
+\subsection{Inconsistent with probabilities}
+
+It turns out that it is impossible to explain these preferences by attributing a single probability judgment to Mandy.  Since there are only two prizes, and we can assume Mandy prefers \$100 to \$0, we can assign $u(\$100) = 1$ and $u(\$0) = 0$.  Since she knows that there are 100 red balls, $u(g_1) = 1/3$.  Let $p$ represent the probability of getting a black ball, $2/3 \geq p \geq 0$.  The utility of $g_2$ is $u(g_2) = p$. Since Mandy expressed a strict preference for $g_1 \succ g_2$, let's assume that she thinks the $u(g_1) > u(g_2)$.  So that means that she thinks that $1/3 > p$. 
+
+Now let's do the same thing for choice 2.  Since we know that there are 200 yellow or black balls, we can write the probability of getting a yellow ball as $2/3-p$, which will range from 0 to 2/3.  The expected utility of gamble $g_3$ is therefore $u(g_3) = 1/3 + 2/3 - p$ or $1-p$.  Gamble $g_4$ has a utility of $u(g_4) = 2/3$.  So a strict preference for $H \succ G$ means that Mandy thinks $2/3 > 1-p$ or that $p > 1/3$. Whoops.
+
+\subsection{Inconsistent with Anscombe\breakslash Aumann Axioms}
+
+If you've understood the representation theorem of the last section, then you already know that something about the Ellsberg preferences are inconsistent with Anscombe\breakslash Aumann axioms.  
+
+It might be nice to prove the inconsistency directly from the axioms. That way we know which axioms are relevant and how the violation takes place.
+
+To do that, we'll make use of a lemma, which is often called the sure-thing principle. 
+
+\begin{lemma}
+Let $g, h \in H$ and $i \in Q$ and let $s \in \Omega$, if $g \leftarrowtail_s i \succ h \leftarrowtail_s i$ then, for all $i^\prime \in Q$, $g \leftarrowtail_s i^\prime \succ h \leftarrowtail_s i^\prime$
+\end{lemma}
+
+\begin{proof}
+Suppose $g, h \in H$ and $i \in Q$ and let $s \in \Omega$ such that $g \leftarrowtail_s i \succ h \leftarrowtail_s i$.  By the independence axiom, we know that:
+\begin{equation}
+\frac{1}{2} g \leftarrowtail_s i \oplus \frac{1}{2} g \leftarrowtail_s i^\prime  \succ \frac{1}{2} h \leftarrowtail_s i \oplus \frac{1}{2} g \leftarrowtail_s i^\prime 
+\label{e:stp-one}
+\end{equation}
+The trick to the proof is to recognize this fact:
+\begin{equation*} 
+\frac{1}{2} h \leftarrowtail_s i \oplus \frac{1}{2} g \leftarrowtail_s i^\prime = \frac{1}{2} h \leftarrowtail_s i^\prime \oplus \frac{1}{2} g \leftarrowtail_s i
+\end{equation*}
+(This is not an indifference, but an actual equality. Both sides of the equation represent literally the same gamble in $H$.)
+
+By substituting this equality into equation~\ref{e:stp-one}, we have
+\begin{equation*}
+\frac{1}{2} g \leftarrowtail_s i \oplus \frac{1}{2} g \leftarrowtail_s i^\prime  \succ \frac{1}{2} h \leftarrowtail_s i^\prime \oplus \frac{1}{2} g \leftarrowtail_s i
+\end{equation*}
+By a reverse application of the independence axiom, we have: $g \leftarrowtail_s i^\prime \succ h \leftarrowtail_s i^\prime$
+\end{proof}
+
+What does all this have to do with the Ellsberg paradox?  Let's return to the normal form pictured in figure~\ref{f:ellsberg}. For simplicity of writing we will let $r$ represent the state where a red ball is drawn, $b$ a black ball, and $y$ a yellow ball.
+
+Consider these two acts. (I've placed an $X$ in the column $y$ because it won't matter.)
+\begin{figure}[h!]
+\centering
+\begin{game}{2}{3}
+     & $r$ & $b$ & $y$ \\
+$h$  & \$100    & \$0        & $X$ \\
+$i$  & \$0      & \$100      & $X$ \\
+\end{game}
+\caption{Two acts relevant to the Ellsberg paradox}
+\label{f:ellsberg-auxillary}
+\end{figure}
+
+Now here is something worth noticing.  Gamble $g_1$ is the same gamble as $h \leftarrowtail_y \$0$. Gamble $g_2$ is the same gamble as $i \leftarrowtail_y \$0$.  (Check figure~\ref{f:ellsberg-auxillary} against~\ref{f:ellsberg} to make sure you see why.)
+
+Also, Gamble $g_3$ is the same gamble as $h \leftarrowtail_y \$100$. Gamble $g_4$ is the same gamble as 
+$i \leftarrowtail_y \$100$. (Check this one too.)
+
+If $g_1 \succ g_2$, then $j \leftarrowtail_y \$0 \succ i \leftarrowtail_y \$0$. By our new lemma if $j \leftarrowtail_y \$0 \succ i \leftarrowtail_y \$0$, then $h \leftarrowtail_y \$100 \succ i \leftarrowtail_y \$100$.  And this just is that  $g_3 \succ g_4$.  So, this shows the Ellbserg choices are inconsistent with the Anscombe\breakslash Aumann axioms.
+
+Why did we bother doing this, when we already knew this fact?  In part because we wanted to figure out what axiom this violated. Central to our proof of the lemma was Axioms 1 and 2.\marginnote{To be completely transparent, Axioms 3 is also relevant as well in the ``reverse'' application of the independence axiom in the proof of the lemma. But we could actually have proven something slightly weaker which was also inconsistent with the Ellsberg choices, and left out Axiom 3 entirely.} 
+
+What this excercise shows us is that the new Anscombe\breakslash Aumann axioms (axioms 4 \& 5) aren't at fault.  The Ellsberg paradox is really inconsistent with von Neumann\breakslash Morgenstern's axioms, even though we couldn't quite express it in that theory.
+
+\section{One more decision theory}
+
+There is one very well known decision theory that we are leaving out of these notes: Savage's decision theory.  Savage's theory is like Anscombe\breakslash Aumann, except he does away with objective probability gambles entirely.\marginnote{To be fair to the history, Savage's theory actually came before Anscombe and Aumann's.  Anscombe and Aumann were trying to find a kind of middle ground between Savage and von Neumann\breakslash Morgenstern.}
+
+Savage's theory is really incredible.  He has a collection of states, outcomes, and acts. Like with Anscombe\breakslash Aumann the preference relation is defined over the acts. That's it.  With the right axioms, you can construct both a utility function and a probability function.  
+
+To do this requires some real mathematical ingenuity. It connects together the qualitative probability idea we discussed in chapter~\ref{c:probability} with the strategies presented in this chapter. 
+
+The math is sufficiently complex that I've decided not to include it in these notes. But if you are interested to see what can be done, I would encourage you to learn a little about Savage's decision theory.
+
+\section{Conclusion}
+
+What the Anscombe\breakslash Aumann decision theory shows us is that with the addition of two more axioms, we can incorporate both objective chance and subjective probability into a coherent decision theory. 
+
+Why bother doing this after all the discussion in chapter~\ref{c:probability}?  At the end of that chapter, we required that people had some kind of concept of uncertainty or probability in mind so we could grab onto it with mathematics.  What Anscombe\breakslash Aumann decision theory shows is that we don't need that.  Mandy doesn't have to be explicitly thinking about uncertainty or probability at all.  So long as she obeys the five axioms she behaves as-if she is.
+
+What von Neumann\breakslash Morgenstern and Anscombe\breakslash Aumann do together is show how decisions alone are sufficient to understand more ``psychological'' notions like probability and utility.  We can treat people as if they have these without actually needing any direct confirmation.
+
+Furthermore, if we find the axioms intuitively compelling, we have an argument for why you {\it should} think in those terms.  By thinking in those terms, you guarantee that you will obey the axioms.  For many, this is a good thing.

@@ -1,0 +1,146 @@
+\documentclass[justified,nobib]{tufte-book}
+
+\setcounter{secnumdepth}{2}
+
+
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{references.bib} 
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldset=urldate, null]
+    }
+  }
+}
+
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+
+%For typesetting a few things in the text
+\usepackage{dialogue}
+\usepackage{customdice}
+\usepackage{booktabs}
+
+\usepackage{graphicx}
+\usepackage[]{hyperref}
+
+% For game theory stuff
+\usepackage{tikz-qtree}
+\usepackage{sgame}
+
+% I need this to make some crossed out symbols
+\usepackage{cancel}
+
+%Try etoolbox for conditional compliation if I want to go that route.
+
+%For making the list of symbols
+%\usepackage[intoc]{nomencl}
+%\makenomenclature
+%\renewcommand{\nomname}{List of Symbols}
+
+% Instead of having a list of symbols, I'm putting them as margin notes instead:
+\newcommand{\nomenclature}[2]{\marginnote{#1: #2}}
+
+
+
+\hypersetup{
+    bookmarksnumbered=true,     
+    bookmarksopen=true,         
+    bookmarksopenlevel=1,       
+    colorlinks=false,            
+    pdfstartview=Fit,           
+    pdfpagemode=UseOutlines,  
+    pdfpagelayout=TwoPageRight
+}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand{\breakslash}{\slash\hspace{0pt}}
+
+\title{Theories of Rational Decision}
+\author{Kevin Zollman}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\begin{fullwidth}
+~\vfill
+\thispagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+Copyright \copyright\ \the\year\ Kevin Zollman
+
+\par This version was created on \today
+
+\par Licensed for non-commercial use, distribution, and modification with the CreativeCommons BY-NC-ND license version 4.0. Find more information here: \url{https://creativecommons.org/licenses/by-nc-nd/4.0/}
+
+
+\end{fullwidth}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+``That's irrational!''
+
+This is a phrase you have undoubtedly heard many times before. There's a good chance that you've uttered it or a close relative.  Perhaps many times.  
+
+People are accused of being irrational in how they vote, in what they buy, in the job the take, in their choice of education, because they gamble, because they take too many risk or not enough, because of what they do or don't believe. Etc. Etc. Etc.
+
+Even the most conservative among us recognizes that different people like different things.  While we might be tempted to equate ``rationality'' with ``what would I do,'' most of us know better than that.  I love pasta, but I don't think it's irrational for someone who is gluten intolerant to avoid eating it.
+
+On the other hand, I don't think that most of us view any collection of decisions as rational. A person who drives those they love away from them is behaving irrationally. Millions of people seek out professional help in order to try and get their behavior to better match what they want from themselves.
+
+The study of rational behavior is called ``decision theory.'' Decision theory is\dots no surprise\dots the study of how people make decisions.  That study is broken down into two parts.
+
+First, is something called ``descriptive'' or ``empirical.'' We want to understand how people make choices, and we would like to have a generalized model of those decisions. We might want to predict, for example, what kind of peanut butter you might buy when you go to the store to buy peanut butter, or where you might choose to live, or even whether you will spend the rest of your life with your current significant other.  Such a model has wide applications from psychology, artificial intelligence, economics, sociology, and even epidemiology.
+
+The other application is ``normative.''  However people actually behave, we might be interested to know how they {\it ought} to behave.  What does it mean for someone to make an irrational choice? What about a rational one? This application of decision theory attempts to build a theory that will distinguish rational from irrational choices.  Good choices from bad ones.
+
+This second application has obvious philosophical implications, but it also has many others.  If we want our policies to be ``rational'' then we might want to require that our regulatory bodies use this theory.  If we want to design an AI to make rational decisions, we might want to use this theory. Etc.
+
+You may have heard of {\it maximizing utility} (or even maximizing {\it expected} utility).  In many fields, like economics and computer science, this is treated as the only rational way to decide.  The reasons for this are complicated, and we will investigate them here. One way to understand these notes is as an exploration of why people are so enamored with this way of deciding, and what it actually means. If you have heard of these terms before, you may be surprised to learn what it does and does not mean.
+
+In these notes, we will focus on the mathematical core of decision theory.  As we develop that core, we will have an eye to both applications.  Of course, we can't possibly cover all the theory, much less the applications of it. I hope that by the end of these notes you will have a basic understanding of the core theory.
+
+I say ``core'' here because there really isn't a single thing that is decision theory. Rather there are many decision theories.  What I will be presenting to you is the received view: the thing people usually mean when they refer to decision theory.  I will note along the way various departures that one might take, but we won't follow them up.  Those departures might go in very different directions depending on whether our aim is normative or descriptive, and that's okay.
+
+\marginnote{Much of the mathematical content of these notes is built off of the brilliant textbooks: \fullcite{kreps1988} and \fullcite{fishburn1979}} The basics of decision theory is mathematical.  We will use the tools of mathematics to develop the theory.  Our hope is that the precision of mathematics can help us to avoid equivocation and provide a clear articulation of the consequences of the theory.  Of course, mathematization runs the risk of hiding important distinctions behind the choice of representation.  I will try to point out when a decision theorist might be accused of doing this.  This isn't meant to be a criticism of mathematization, but a call for---perhaps---a different representation.
+
+In terms of what kind of mathematics we'll be using, it is not difficult.  We'll be using some basic ideas from set theory and algebra.  Decision and game theory can be expanded to more complex setting where one might use calculus, analysis, and topology, but for these notes we won't go there.  I will also mostly avoid issues that arise only in infinitely large settings.  Those can be interesting, but I'd rather not be distracted by them in these notes for the purpose of introduction.
+
+
+\include{Certainty}
+
+\include{UncertaintyNoProb}
+
+\include{Probability}
+
+\include{DiachronicProbability}
+
+\include{vNM}
+
+\include{AA}
+
+\include{SocialChoice}
+
+% No list of symbols at the end
+%\printnomenclature
+
+\backmatter
+
+\printbibliography
+
+\end{document}

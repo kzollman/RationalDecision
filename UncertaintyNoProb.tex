@@ -1,0 +1,155 @@
+\chapter{A first pass at uncertainty}
+\label{c:uncertainty-noprob}
+
+In chapter~\ref{c:certainty} we focused on decisions that involve no uncertainty whatsoever.  We've assumed, perhaps unreasonably, that Mandy is always certain what she will get when she makes a choice.  As a first approximation, this isn't terrible for situations where the outcomes are highly likely.  If Mandy goes to her favorite coffee shop, which she knows well and has always been consistent, she knows what she's going to get.
+
+However, in many situations, we don't know what we are going to get. If Mandy buys a lottery ticket, Mandy might know what prizes are possible. Mandy doesn't know ahead of time which of those prizes Mandy will get.
+
+How should an agent decide when confronting such situations?  Suppose, Mandy needs to decide whether or not she should keep her \$5 or spend it on a lottery ticket. What should she do and how should she make that decision?  What will she do?  These are very tricky questions, and they will occupy a large set of these notes. For the purposes of this chapter, we will present the starting points. In later chapters we will dive deeper into different aspects of the problem.
+
+\section{Normal form}
+
+In the previous chapter we started with a set $X$: the menu.  This one set allowed us to represent two different things. Simultaneously we were describing the things that Mandy is choosing and also the things that Mandy will get.  In the language of decision theory $X$ represented both the actions and outcomes.  
+
+When we move to the world of uncertainty, we have pull those two things apart.  Mandy can choose whether or not to buy a lottery ticket (these are some of her actions), but she cannot choose whether or not the lottery ticket will be a winner or a loser (these are the outcomes).
+
+We'll start by keeping the set $X$ as the set of outcomes, and we'll assume that Mandy has a preference relation $\succsim$ over that set.  This represents which outcomes Mandy would choose, {\it if she could choose outcomes.}  Often, she can't choose outcomes, but this is helpful because it allows us to talk about the value of various things that might happen. We will assume that $\succsim$ is complete and transitive with respect to $X$.
+
+Recall from the previous chapter that we are allowed to represent Mandy with an ordinal utility function $u: X \to \mathbb{R}$. We have to be very careful when doing this, however, because---as we mentioned in the previous chapter---some properties of this utility function are off-limits.  We'll revisit this later in this chapter. 
+I am allowed to replace particular outcomes with numbers even if the actual outcomes might be anything: dishes at a restaurant, potential romantic partners, happiness, etc.
+
+The first thing we will add to this picture is a set of {\it states of the world}. These are the various ways the world might be that can affect what outcome Mandy gets.  For example, if Mandy is considering buying a lottery ticket, the relevant states might be something like: ``the ticket is a winner'' or ``the ticket is a loser.''  If there are many different prizes, we might need more, like ``the ticket gives you \$10'' and ``the ticket gives you \$1000.''  We will denote the set of states as $\Omega$.  
+
+\nomenclature{$\Omega$}{Set of states of the world. Presumed to be exhaustive and to contain mutually exclusive {\it atomic events}.}
+
+Finally, we need to say what Mandy's actions are. We will describe Mandy's actions as functions from $A: \Omega \to X$.  That is, an action for Mandy is something which designates what outcome she gets in every state.  For example, if we are considering whether or not Mandy should buy a lottery ticket there are two relevant actions.  One action, not buying the ticket, involves a function that pays the same in every state.  The other action, buying the lottery ticket, pays a different amount in every state and what it pays is determined by the rules of the lottery.
+
+\nomenclature{$A,B,C$}{Actions, which are a functions from states of the world to outcomes in $X$.}
+
+Often we'll depict this with a very simple table, called the {\it normal form}.  The columns are the possible states.  The rows are the possible actions.  In each cell is the outcome that Mandy will get if she takes that action and the world is in that state. 
+
+For example, suppose that Mandy is considering whether to buy a very simple lottery ticket: it costs \$5.  It is either a loser (she win's nothing) or it is a winner that pays \$1000.  Let's just represent Mandy's utility with the dollar value for the moment.  This choice is represented in figure~\ref{f:dollar-lottery}.
+
+\begin{figure}
+\centering
+\begin{game}{2}{2}
+                        & {\it Ticket is a winner} & {\it Ticket is a loser} \\
+{\it Buy the ticket}    & 995                       & -5 \\
+{\it Don't buy}        & 0                           & 0 \\
+\end{game}
+\label{f:dollar-lottery}
+\caption{A choice for Mandy}
+\end{figure}
+
+\section{How to decide}
+
+\subsection{What we cannot do}
+
+So far we've developed a way to represent a decision under uncertainty, but we haven't talked much about how to decide.  Should Mandy buy a lottery ticket or not?  
+
+Many of you might naturally want to know: what's the chance the lottery ticket wins?  If it is likely to win, then maybe she should. If it's not likely to win, maybe she shouldn't.  Perhaps you might want to use something like the {\it expected} or {\it average} payoff to make your decision.  You might say, well if the average payoff is above \$0, then she should buy the ticket.  If it's less then she shouldn't.   In this particular example, that happens when the lottery has about a 0.5\% chance of winning. If the ticket is more likely to win than 0.5\% she should buy the ticket. This seems like a natural way to make the decision. 
+
+Natural as such a decision rule might be, we need to stop for a moment.  Remember what we said about utility in the previous chapter.  When we are using ordinal utility, the average of utilities is not meaningful. That's a disallowed operation.  Why?  Well because we could have chosen a different utility function and it would have done equally well at representing Mandy's preferences. 
+
+To see why, let's consider the very simple lottery we described above.  There are three potential outcomes: Mandy wins \$1000, Mandy buys a ticket that wins nothing (so she loses \$5), or she doesn't buy a ticket and thus wins \$0.  We'll suppose that, like most of us, Mandy likes money, so her preferences are: Win \$1000 $\succ$ Win \$0 $\succ$ Lose \$5. 
+
+But that's all we know.  So, her preferences are captured with many different utility functions. For example, figure~\ref{f:lottery-util-second} is another utility function that represents her equally well.
+
+\begin{figure}
+\centering
+\begin{game}{2}{2}
+                        & {\it Ticket is a winner} & {\it Ticket is a loser} \\
+{\it Buy the ticket}    & 100,000                    & 0 \\
+{\it Don't buy}        & 1                           & 1 \\
+\end{game}
+\label{f:lottery-util-second}
+\caption{Another utility function which captures Mandy's preferences}
+\end{figure}
+
+Now, if we average {\it these} utilities, we'll find a different answer to the conditions under which she should buy a lottery ticket.  Using this utility function, she should buy the ticket if it has more than 0.001\% chance of winning.  If we used this utility function, we would suggest that she buy a much worse lottery ticket than if we used the other utility function.
+
+So far, we have no way of distinguishing between these utility functions. So, as a result, we cannot use averaging to make a decision.  Because we can't decide which utility function is right and which one is wrong.  We are going to come back to this issue in a while, and we'll have more to say.  
+
+If we can't average is there anything we can do?  It turns out there are a few things, although some of them might be unsatisfying.  It's worth taking a moment to look at what we might be able to do.
+
+\subsection{Dominance}
+
+One principle that is largely uncontroversial is called ``strict dominance.''  The idea of using strict dominance is that you should eliminate any option which does worse {\it no matter what} from consideration.  This principle may seem so obvious to you that it's not necessary to state, but nonetheless some people think it is quite powerful in some contexts.
+
+For an example, imagine a very simple roulette wheel that is broken into three regions: red, black, and green.  And suppose that you are offered two gambles.  Gamble $A_1$ pays \$1 if the ball lands in red, \$2 if it lands in black, and \$3 if it lands in green.  Gamble $A_2$ pays \$4 for red, \$5 for black and \$6 for green.  Obviously, you should choose $A_2$.  The worse outcome in $A_2$ (\$4) is better than the best outcome in $A_1$ (\$3). So no matter what you do better with $A_2$ than $A_1$.  
+
+Strict dominance actually says more than this, however.  It also asks you to consider a state-by-state comparison.  If one gamble does better in every state than another, then you should choose the one that does better.  For example, consider Gamble $A_3$ which pays \$1 for red, \$3 for black, and \$5 for green.  Suppose you have to choose between this and another gamble on the same wheel: Gamble $A_4$ pays \$2 for red, \$4 for black, and \$6 for green.  Now it is no longer the case that the best option for one of them is worse than the worst option of the other.  But it's still the case that $A_4$ strictly dominates $A_3$.
+
+It's easiest to see that in the normal form of figure~\ref{f:two-roulette}
+
+\begin{figure}
+\centering
+\begin{game}{2}{3}
+                        & {\it Red} & {\it Black} & {\it Green} \\
+{\it Gamble $A_3$}          & 1         & 3           & 5\\
+{\it Gamble $A_4$}          & 2         & 4           & 6\\
+\end{game}
+\label{f:two-roulette}
+\caption{Two roulette lotteries}
+\end{figure}
+
+To determine if one gamble beats another in the normal form, you just look in each column. If the entry for one gamble is always strictly higher than the entry for another column, then one gamble strictly dominates another.
+
+One nice thing about strict dominance is that it does not depend on which utility function we use to represent Mandy's preferences.  If one option strictly dominates another option for one allowable utility function, then it will for all utility functions.  (Do you see why that is? If not, take a second to convince yourself it's true.)  So, this decision rule can be used even with ordinal utility functions.
+
+The states must be specified correctly, however.  When talking about Gambles $A_3$ and $A_4$ we had to be sure that both were about the same spin of the same roulette wheel.  To illustrate the problem, consider two different gambles on flipping two different coins.  Suppose Gamble $A_5$ pays \$1 if ``coin number 5'' comes up heads and \$3 if it comes up tails.  Gamble $A_6$ pays \$2 if ``coin number 6'' comes up heads and \$4 if it comes up tails.   
+
+Notice, these are about {\it different} flips of {\it different} coins.  So now, we have to specify the state space more carefully, we have to say what each coin did.  We'll write this as two letters, what coin number 5 did and what coin numer 6 did. For example,  ``$HT$'' means that coin number 5 came up heads while coin number 6 came up tails. Notice in figure~\ref{f:coin-lottery} that it is {\bf not} the case that Gamble $A_5$ strictly dominates Gamble $A_6$.
+\nomenclature{$H, T$}{To denote getting heads or tails on the flip of a coin.}
+
+\begin{figure}
+\centering
+\begin{game}{2}{4}
+                        & {\it HH} & {\it HT} & {\it TH} & {\it TH} \\
+{\it Gamble $A_5$}          & 1         & 1           & 3    & 3\\
+{\it Gamble $A_6$}          & 2         & 4           & 2    & 4\\
+\end{game}
+\medskip
+\label{f:coin-lottery}
+\caption{A lottery with different coins}
+\end{figure}
+
+Why does this matter?  Because we don't know if those two coins have the same probability of coming up heads. We can't treat them as interchangeable because we don't know if they are.  Remember, we're trying to do decision-making without any reference to probability whatsoever.
+
+In addition to strict dominance, there's a slightly weaker principle called {\it weak dominance} that allows there to be some ties.  One option weakly dominates another if the first option is sometimes better and never worse than the later one.  There can be a little bit of debate about this, but we won't dive in.
+
+\subsection{When dominance fails}
+
+Strict dominance seems like a totally obvious principle for decision-making. How could anyone object? The only situations where people have concerns is something called act-state dependence.  The idea is that which state comes about might depend on what action you take.  
+
+Imagine Jesse who loves riding his motorcycle without a helmet. When Jesse's friend Daniel encourages him to consider wearing a helmet for his safety, Jesse replies,
+
+\begin{quote}
+\it Look, I'm either going to die from riding my motorcycle or not die from riding it.  If I'm not going to die from riding, why waste the money on a helmet?  And if do die from riding my motorcycle, the helmet will reduce how much I enjoyed my last ride. And wouldn't you want my last ride to be as much fun as possible?
+\end{quote}
+
+Jesse is using a kind of dominance reasoning.  The two states are ``die from a motorcycle accident'' or ``not die from a motorcycle accident.''  He reasons that in each of these states, wearing a helmet would be worse than not wearing one. So, by strict dominance, he reasons he shouldn't wear a helmet.
+ 
+Hopefully you have already identified the problem with Jesse's reasoning. By wearing a helmet he reduces the chances that he will die in a motorcycle accident; he changes the probability of the two states.  
+
+\marginnote{We will have more to say about act--state dependence in chapter~\ref{c:aa}.} This situation is called act--state dependence.  The idea is that the action you take affects the chances that one state obtains or another doesn't.  In such a case, dominance reasoning is not guaranteed to be reasonable.  If we know there is no act--state dependence, however, dominance reasoning is usually taken to be pretty unassailable.
+
+\subsection{Maximin and maximax}
+
+Baring cases of act-state dependence, dominance is largely uncontroversial.  But, it's limited.  Dominance doesn't help Mandy to decide about the lottery ticket, since neither option dominates the other.  So, people have striven to develop more general decision rules that tell someone what to do in every situation. However, they are much more controversial than dominance.  
+
+The first of these decision rules is called {\it maximin} for ``maximizing the minimum payoff.'' (Confusingly it is also called minimax for maximizing the minimum loss.  The world is an imperfect place.)  The idea is that an agent should chose by finding the worst-case outcome for each individual action. They should then choose the action that has the best worst case.  
+
+For Mandy and the lottery ticket, Mandy should always choose not to buy the lottery ticket. The worst case scenario from buying is losing her \$5, while the worst case scenario from not buying is \$0.  So, the best of these comes from not buying.
+
+The upside to maximin, like with dominance, is that it does not depend on which among all the ordinal utility functions we choose. We don't have to know how much Mandy likes the various outcomes, only which she thinks is better. This is the good side.
+
+What's the bad side?  Suppose someone came up to Mandy with an exceptionally good version of the lottery.  Maybe there are 10 tickets and 9 of them are winners.  Maximin would tell Mandy not to buy the ticket.  In fact, it would tell her not to buy the ticket even if there were 10,000 tickets and 9,999 of them were winners.  
+
+Of course, there is a more optimistic decision rule called maximax. It asks Mandy to look at the best case scenario and choose the gamble which has the best best-case-scenario.  It has the same good side, and the opposite bad side.  Now instead of making Many overly cautious, it makes her overly risky.  It would tell her to buy every lottery ticket she can find, regardless of the odds, since every ticket {\it might} win.
+
+\section{Where to go from here}
+
+Dominance strikes most people as reasonable when it applies, but often it doesn't apply.  Maximin and Maximax always apply, but are thought to be unreasonable.  So what should we do?  
+
+Without putting more stuff on the table, there isn't very much more we can do.  In order to develop a way of deciding in the face of uncertainty, we need (1) a more detailed theory of what uncertainty is and (2) some way of developing a more fine-grained notion of utility.  We will start with task (1) in the next chapter.
